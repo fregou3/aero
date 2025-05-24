@@ -1,0 +1,14 @@
+admin@aeromaintenance.com / password123 (Administrateur)
+engineer@aeromaintenance.com / password123 (Ingénieur)
+technician@aeromaintenance.com / password123 (Technicien)
+
+# Commandes pour mettre à jour l'application
+
+# 1. Arrêter les conteneurs actuels
+docker-compose down
+
+# 2. Reconstruire et démarrer les conteneurs
+docker-compose up --build
+
+# 3. URL d'accès à l'application
+http://localhost:3042

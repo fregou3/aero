@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:14-alpine
+    container_name: aeromaintenance-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: aeromaintenance
+    ports:
+      - "5441:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - aeromaintenance-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: aeromaintenance-backend
+    restart: always
+    environment:
+      NODE_ENV: development
+      PORT: 5042
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: aeromaintenance
+      JWT_SECRET: aeromaintenance-secure-jwt-secret-key
+    ports:
+      - "5042:5042"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - postgres
+    networks:
+      - aeromaintenance-network
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: aeromaintenance-frontend
+    restart: always
+    environment:
+      NODE_ENV: development
+      REACT_APP_API_URL: http://localhost:5042/api
+    ports:
+      - "3042:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - aeromaintenance-network
+
+networks:
+  aeromaintenance-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
