@@ -24,6 +24,8 @@ import InventoryDetail from './pages/inventory/InventoryDetail';
 import DocumentList from './pages/documents/DocumentList';
 import DocumentDetail from './pages/documents/DocumentDetail';
 import WorkflowPage from './pages/workflow/WorkflowPage';
+import AnalysisPage from './pages/analysis/AnalysisPage';
+import AIAssistantPage from './pages/ai/AIAssistantPage';
 import AircraftViewer from './pages/viewer/AircraftViewer';
 import UserProfile from './pages/user/UserProfile';
 import NotFound from './pages/NotFound';
@@ -71,6 +73,8 @@ function App() {
         <Route path="/documents" element={<DocumentList />} />
         <Route path="/documents/:id" element={<DocumentDetail />} />
         <Route path="/workflow" element={<WorkflowPage />} />
+        <Route path="/analysis" element={<AnalysisPage />} />
+        <Route path="/ai" element={<AIAssistantPage />} />
         <Route path="/viewer/:id" element={<AircraftViewer />} />
         <Route path="/profile" element={<UserProfile />} />
       </Route>

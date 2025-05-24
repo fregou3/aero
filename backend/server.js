@@ -12,6 +12,7 @@ const partsRoutes = require('./routes/parts.routes');
 const maintenanceRoutes = require('./routes/maintenance.routes');
 const inventoryRoutes = require('./routes/inventory.routes');
 const documentsRoutes = require('./routes/documents.routes');
+const aiRoutes = require('./routes/aiRoutes');
 
 // Database connection
 const db = require('./models');
@@ -77,6 +78,7 @@ app.use('/api/parts', partsRoutes);
 app.use('/api/maintenance', maintenanceRoutes);
 app.use('/api/inventory', inventoryRoutes);
 app.use('/api/documents', documentsRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

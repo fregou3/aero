@@ -35,34 +35,59 @@ const GraphContainer = styled(Box)(({ theme }) => ({
   },
   '& .edge-label': {
     position: 'absolute',
-    backgroundColor: 'rgba(255, 255, 255, 0.85)',
-    padding: '3px 6px',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    padding: '4px 8px',
     borderRadius: '4px',
     fontSize: '0.75rem',
     fontWeight: 'medium',
-    boxShadow: '0 1px 3px rgba(0,0,0,0.12)',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.15)',
     whiteSpace: 'nowrap',
-    zIndex: 1
+    zIndex: 5,
+    border: '1px solid rgba(0,0,0,0.1)',
+    pointerEvents: 'none'
   },
   '& .document-node': {
     backgroundColor: '#e3f2fd',
     border: '2px solid #90caf9',
-    borderLeft: '8px solid #1976d2'
+    borderLeft: '8px solid #1976d2',
+    boxShadow: '0 4px 8px rgba(25, 118, 210, 0.15)'
   },
   '& .delivery-node': {
     backgroundColor: '#f1f8e9',
     border: '2px solid #aed581',
-    borderLeft: '8px solid #7cb342'
+    borderLeft: '8px solid #7cb342',
+    boxShadow: '0 4px 8px rgba(124, 179, 66, 0.15)'
   },
   '& .validation-node': {
     backgroundColor: '#fff3e0',
     border: '2px solid #ffb74d',
-    borderLeft: '8px solid #f57c00'
+    borderLeft: '8px solid #f57c00',
+    boxShadow: '0 4px 8px rgba(245, 124, 0, 0.15)'
   },
   '& .part-node': {
     backgroundColor: '#e8eaf6',
     border: '2px solid #9fa8da',
-    borderLeft: '8px solid #3f51b5'
+    borderLeft: '8px solid #3f51b5',
+    boxShadow: '0 4px 8px rgba(63, 81, 181, 0.15)'
+  },
+  '& .level-line': {
+    position: 'absolute',
+    height: '2px',
+    width: '100%',
+    zIndex: -1,
+    transition: 'top 0.3s ease-in-out'
+  },
+  '& .document-line': {
+    backgroundColor: 'rgba(25, 118, 210, 0.2)'
+  },
+  '& .delivery-line': {
+    backgroundColor: 'rgba(124, 179, 66, 0.2)'
+  },
+  '& .validation-line': {
+    backgroundColor: 'rgba(245, 124, 0, 0.2)'
+  },
+  '& .part-line': {
+    backgroundColor: 'rgba(63, 81, 181, 0.2)'
   },
   '& .status-indicator': {
     width: '10px',
@@ -99,11 +124,11 @@ const WorkflowGraph = ({ data, zoom, filter, search }) => {
     const nodeWidth = 220;
     const nodeHeight = 80;
     
-    // Position de départ et d'arrivée
-    const startX = sourceNode.position.x + nodeWidth / 2;
-    const startY = sourceNode.position.y + nodeHeight;
-    const endX = targetNode.position.x + nodeWidth / 2;
-    const endY = targetNode.position.y;
+    // Position de départ et d'arrivée avec prise en compte du zoom
+    const startX = sourceNode.position.x * zoom + (nodeWidth * zoom) / 2;
+    const startY = sourceNode.position.y * zoom + (nodeHeight * zoom);
+    const endX = targetNode.position.x * zoom + (nodeWidth * zoom) / 2;
+    const endY = targetNode.position.y * zoom;
     
     // Calcul de la longueur et de l'angle de l'arête
     const dx = endX - startX;
@@ -116,6 +141,7 @@ const WorkflowGraph = ({ data, zoom, filter, search }) => {
     if (edgeType === 'smoothstep') {
       // Pour les arêtes courbes, on utilise une approche différente
       // On crée un chemin SVG plutôt qu'une simple ligne rotative
+      // Les points de contrôle sont également ajustés en fonction du zoom
       const controlPointX1 = startX;
       const controlPointY1 = startY + (endY - startY) / 3;
       const controlPointX2 = endX;
@@ -133,31 +159,51 @@ const WorkflowGraph = ({ data, zoom, filter, search }) => {
         pointerEvents: 'none'
       };
       
-      // Position du label (au milieu de la courbe)
-      const labelX = (startX + endX) / 2;
-      const labelY = (startY + endY) / 2;
+      // Position du label (au milieu de la courbe) ajustée en fonction du zoom
+      // Décalage spécial pour certains liens
+      let labelOffsetX = 0;
+      let labelOffsetY = 0;
+      
+      // Décalage spécial pour le lien entre "Mise à jour documentation" et "Approbation finale"
+      if ((source === 'delivery2' && target === 'validation2') || 
+          (source === 'validation2' && target === 'delivery2')) {
+        labelOffsetY = -15; // Décalage vers le haut
+      }
+      
+      const labelX = (startX + endX) / 2 + labelOffsetX;
+      const labelY = (startY + endY) / 2 + labelOffsetY;
+      
+      // Ajuster la taille du label en fonction du zoom
+      const labelScale = Math.max(0.8, Math.min(zoom, 1.2)); // Limiter l'échelle entre 0.8 et 1.2
       
       return { 
         svgPath,
         edgeStyle,
         labelStyle: {
-          left: `${labelX - 50}px`,
-          top: `${labelY - 10}px`
+          left: `${labelX - 50 * labelScale}px`,
+          top: `${labelY - 10 * labelScale}px`,
+          transform: `scale(${labelScale})`,
+          transformOrigin: 'center center'
         }
       };
     } else {
-      // Position et style de l'arête droite (fallback)
+      // Position et style de l'arête droite (fallback) ajustés en fonction du zoom
       const style = {
         left: `${startX}px`,
         top: `${startY}px`,
         width: `${length}px`,
-        transform: `rotate(${angle}deg)`
+        transform: `rotate(${angle}deg)`,
+        height: `${2 * zoom}px` // Ajuster l'épaisseur de la ligne en fonction du zoom
       };
       
-      // Position du label (au milieu de l'arête)
+      // Position du label (au milieu de l'arête) ajustée en fonction du zoom
+      const labelScale = Math.max(0.8, Math.min(zoom, 1.2)); // Limiter l'échelle entre 0.8 et 1.2
+      
       const labelStyle = {
-        left: `${startX + dx / 2 - 50}px`,
-        top: `${startY + dy / 2 - 10}px`
+        left: `${startX + dx / 2 - 50 * labelScale}px`,
+        top: `${startY + dy / 2 - 10 * labelScale}px`,
+        transform: `scale(${labelScale})`,
+        transformOrigin: 'center center'
       };
       
       return { style, labelStyle };
@@ -299,7 +345,8 @@ const WorkflowGraph = ({ data, zoom, filter, search }) => {
               {node.type === 'deliveryNode' && (
                 <div style={{ fontSize: '0.85rem' }}>
                   <div style={{ marginBottom: '4px' }}><strong>Date:</strong> {node.data.date}</div>
-                  <div><strong>Responsable:</strong> {node.data.responsible}</div>
+                  <div style={{ marginBottom: '4px' }}><strong>Responsable:</strong> {node.data.responsible}</div>
+                  {node.data.status && <div><strong>État:</strong> {node.data.status}</div>}
                 </div>
               )}
               
@@ -313,7 +360,8 @@ const WorkflowGraph = ({ data, zoom, filter, search }) => {
               {node.type === 'partNode' && (
                 <div style={{ fontSize: '0.85rem' }}>
                   <div style={{ marginBottom: '4px' }}><strong>Référence:</strong> {node.data.partNumber}</div>
-                  <div><strong>N° série:</strong> {node.data.serialNumber}</div>
+                  <div style={{ marginBottom: '4px' }}><strong>N° série:</strong> {node.data.serialNumber}</div>
+                  {node.data.status && <div><strong>État:</strong> {node.data.status}</div>}
                 </div>
               )}
             </div>
@@ -323,8 +371,27 @@ const WorkflowGraph = ({ data, zoom, filter, search }) => {
     );
   };
   
+  // Rendu des lignes de niveau pour visualiser l'alignement
+  const renderLevelLines = () => {
+    // Calcul des positions des lignes en fonction du zoom
+    const documentLineTop = 120 * zoom;
+    const deliveryLineTop = 290 * zoom;
+    const validationLineTop = 460 * zoom;
+    const partLineTop = 630 * zoom;
+    
+    return (
+      <>
+        <div className="level-line document-line" style={{ top: `${documentLineTop}px` }} />
+        <div className="level-line delivery-line" style={{ top: `${deliveryLineTop}px` }} />
+        <div className="level-line validation-line" style={{ top: `${validationLineTop}px` }} />
+        <div className="level-line part-line" style={{ top: `${partLineTop}px` }} />
+      </>
+    );
+  };
+
   return (
     <GraphContainer ref={containerRef}>
+      {renderLevelLines()}
       {renderGraph()}
     </GraphContainer>
   );

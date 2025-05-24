@@ -32,7 +32,8 @@ import {
   Notifications as NotificationsIcon,
   Logout as LogoutIcon,
   Settings as SettingsIcon,
-  AccountTree as AccountTreeIcon
+  AccountTree as AccountTreeIcon,
+  Psychology as PsychologyIcon
 } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -127,7 +128,8 @@ const MainLayout = () => {
     { text: 'Inventory', icon: <InventoryIcon />, path: '/inventory' },
     { text: 'Documents', icon: <DocumentIcon />, path: '/documents' },
     { text: 'Workflow', icon: <AccountTreeIcon />, path: '/workflow' },
-    { text: '3D Viewer', icon: <ViewerIcon />, path: '/viewer' }
+    { text: 'Analysis', icon: <DocumentIcon />, path: '/analysis' },
+    { text: 'Intelligence artificielle', icon: <PsychologyIcon />, path: '/ai' }
   ];
 
   return (

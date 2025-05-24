@@ -12,3 +12,9 @@ docker-compose up --build
 
 # 3. URL d'accès à l'application
 http://localhost:3042
+
+
+docker exec -it 982d52e8a995 psql -U postgres -d aeromaintenance -f /tmp/count_documents.sql
+
+démarrer front en powershell
+$env:PORT=3042; npm start
