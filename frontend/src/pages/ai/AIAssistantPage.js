@@ -56,12 +56,36 @@ const AIAssistantPage = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+  
+  // Vérifier le statut de la base vectorielle au chargement de la page
+  useEffect(() => {
+    const checkVectorDbStatus = async () => {
+      try {
+        const response = await fetch('http://localhost:5042/api/ai/vector-db-status');
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Statut de la base vectorielle:', data);
+          if (data.isInitialized) {
+            setVectorDbStatus('initialisée');
+          } else {
+            setVectorDbStatus('non initialisée');
+          }
+        } else {
+          console.error('Erreur lors de la récupération du statut de la base vectorielle');
+        }
+      } catch (error) {
+        console.error('Erreur lors de la vérification du statut de la base vectorielle:', error);
+      }
+    };
+    
+    checkVectorDbStatus();
+  }, []);
 
   // Fonction pour envoyer un message
   const handleSendMessage = () => {
     if (!inputMessage.trim()) return;
     
-    const userMessage = { id: messages.length + 1, text: inputMessage, sender: 'user', timestamp: new Date() };
+    const userMessage = { id: messages.length + 1, content: inputMessage, sender: 'user', timestamp: new Date() };
     setMessages(prevMessages => [...prevMessages, userMessage]);
     setInputMessage('');
     
@@ -69,7 +93,7 @@ const AIAssistantPage = () => {
     const loadingMessageId = messages.length + 2;
     setMessages(prevMessages => [...prevMessages, { 
       id: loadingMessageId, 
-      text: 'Recherche dans la base de documents...', 
+      content: 'Recherche dans la base de documents...', 
       sender: 'ai', 
       timestamp: new Date(),
       isLoading: true 
@@ -79,7 +103,7 @@ const AIAssistantPage = () => {
     fetch('http://localhost:5042/api/ai/generate-answer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ question: userMessage.text })
+      body: JSON.stringify({ question: userMessage.content })
     })
       .then(response => {
         if (!response.ok) {
@@ -93,10 +117,10 @@ const AIAssistantPage = () => {
           setMessages(prevMessages => prevMessages.map(msg => 
             msg.id === loadingMessageId ? {
               id: loadingMessageId,
-              text: data.answer,
+              content: data.answer,
               sender: 'ai',
               timestamp: new Date(),
-              sources: data.relevantDocs || []
+              relevantDocs: data.documents || []
             } : msg
           ));
         } else {
@@ -109,7 +133,7 @@ const AIAssistantPage = () => {
         setMessages(prevMessages => prevMessages.map(msg => 
           msg.id === loadingMessageId ? {
             id: loadingMessageId,
-            text: `Désolé, une erreur s'est produite: ${error.message}. Veuillez réessayer ou vérifier que la base vectorielle est initialisée.`,
+            content: `Désolé, une erreur s'est produite: ${error.message}. Veuillez réessayer ou vérifier que la base vectorielle est initialisée.`,
             sender: 'ai',
             timestamp: new Date(),
             isError: true
@@ -129,7 +153,7 @@ const AIAssistantPage = () => {
     let response;
     
     if (vectorDbStatus !== 'initialisée') {
-      response = "Je ne peux pas répondre à votre question car la base de connaissances n'a pas encore été initialisée. Veuillez cliquer sur le bouton 'Analyser les documents' pour indexer les documents techniques.";
+      response = "Je ne peux pas répondre à votre question car la base de connaissances n'a pas encore été initialisée. Veuillez d'abord analyser les documents dans la page d'analyse, puis cliquer sur le bouton 'Indexer les documents dans la base vectorielle' pour alimenter la base de connaissances.";
     } else if (relevantDocs.length === 0) {
       response = "Je n'ai pas trouvé d'informations pertinentes dans la base de connaissances pour répondre à votre question. Pourriez-vous reformuler ou poser une question différente?";
     } else {
@@ -149,6 +173,69 @@ const AIAssistantPage = () => {
     setLoading(false);
   };
 
+  // Fonction pour vider et réindexer la base vectorielle
+  const handleReindexDocuments = () => {
+    if (!window.confirm('Voulez-vous vraiment vider la base vectorielle et réindexer tous les documents?')) {
+      return;
+    }
+    
+    setIndexing(true);
+    setIndexProgress(0);
+    setIndexStatus('Vidage de la base vectorielle en cours...');
+    setVectorDbStatus('en cours d\'initialisation');
+    
+    // Étape 1: Vider la base vectorielle
+    fetch('http://localhost:5042/api/ai/clear-vector-db', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+        setIndexProgress(30);
+        setIndexStatus('Base vectorielle vidée, réindexation en cours...');
+        return response.json();
+      })
+      .then(data => {
+        if (data.success) {
+          // Étape 2: Réindexer les documents
+          return fetch('http://localhost:5042/api/ai/index-documents', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+          });
+        } else {
+          throw new Error(data.message || 'Erreur lors du vidage de la base vectorielle');
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+        setIndexProgress(70);
+        setIndexStatus('Finalisation de la réindexation...');
+        return response.json();
+      })
+      .then(data => {
+        if (data.success && data.documentCount) {
+          setVectorDbStatus('initialisée');
+          setIndexProgress(100);
+          setIndexStatus(`${data.documentCount} documents réindexés avec succès`);
+        } else {
+          throw new Error(data.message || 'Erreur lors de la réindexation');
+        }
+      })
+      .catch(error => {
+        console.error('Erreur lors de la réindexation des documents:', error);
+        setIndexStatus(`Erreur: ${error.message}`);
+        setVectorDbStatus('erreur');
+        setIndexProgress(0);
+      })
+      .finally(() => {
+        setTimeout(() => setIndexing(false), 1000);
+      });
+  };
+  
   // Fonction pour trouver les documents pertinents (simulation)
   const findRelevantDocuments = (query) => {
     const allDocs = [
@@ -207,7 +294,7 @@ const AIAssistantPage = () => {
   const handleIndexDocuments = () => {
     setIndexing(true);
     setIndexProgress(0);
-    setIndexStatus('Initialisation de l\'indexation...');
+    setIndexStatus('Analyse et indexation des documents en cours...');
     setVectorDbStatus('en cours d\'initialisation');
     
     // Appel à l'API backend pour indexer les documents PDF
@@ -220,20 +307,20 @@ const AIAssistantPage = () => {
           throw new Error(`Erreur HTTP: ${response.status}`);
         }
         setIndexProgress(50);
-        setIndexStatus('Finalisation de l\'indexation...');
+        setIndexStatus('Finalisation de l\'analyse et de l\'indexation...');
         return response.json();
       })
       .then(data => {
         if (data.success && data.documentCount) {
           setVectorDbStatus('initialisée');
           setIndexProgress(100);
-          setIndexStatus(`${data.documentCount} documents indexés avec succès`);
+          setIndexStatus(`${data.documentCount} documents analysés et indexés avec succès`);
         } else {
           throw new Error(data.message || 'Erreur lors de l\'indexation');
         }
       })
       .catch(error => {
-        console.error('Erreur lors de l\'indexation des documents:', error);
+        console.error('Erreur lors de l\'indexation des documents dans la base vectorielle:', error);
         setIndexStatus(`Erreur: ${error.message}`);
         setVectorDbStatus('erreur');
         setIndexProgress(0);
@@ -454,7 +541,19 @@ const AIAssistantPage = () => {
                   fullWidth
                   sx={{ mt: 1 }}
                 >
-                  Analyser les documents
+                  Analyser et indexer les documents
+                </Button>
+                
+                <Button
+                  variant="outlined"
+                  color="error"
+                  startIcon={<RefreshIcon />}
+                  onClick={handleReindexDocuments}
+                  disabled={indexing || vectorDbStatus !== 'initialisée'}
+                  fullWidth
+                  sx={{ mt: 1 }}
+                >
+                  Vider et réindexer les documents
                 </Button>
               </Box>
               

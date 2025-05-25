@@ -58,7 +58,7 @@ async function analyzePDFContent(text, filename) {
       else if (level === 'élevée' || level === 'elevee') detectedRiskLevel = 'élevée';
       else detectedRiskLevel = 'normale';
       
-      console.log(`Niveau d'urgence détecté directement dans le document: ${detectedRiskLevel}`);
+      logger.debug(`Niveau d'urgence détecté directement dans le document: ${detectedRiskLevel}`);
     }
     
     // Limiter la taille du texte pour éviter de dépasser les limites de l'API
@@ -106,8 +106,15 @@ async function analyzePDFContent(text, filename) {
       
       // Si nous avons détecté un niveau de risque directement dans le texte, l'utiliser
       if (detectedRiskLevel) {
-        console.log(`Remplacement du niveau de risque '${result.riskLevel}' par la valeur détectée '${detectedRiskLevel}'`);
-        result.riskLevel = detectedRiskLevel;
+        // Ignorer la casse lors de la comparaison
+        if (result.riskLevel && result.riskLevel.toLowerCase() === detectedRiskLevel.toLowerCase()) {
+          // Les valeurs sont identiques en ignorant la casse, utiliser la valeur normalisée
+          result.riskLevel = detectedRiskLevel;
+        } else {
+          // Les valeurs sont différentes, remplacer et logger
+          logger.debug(`Remplacement du niveau de risque '${result.riskLevel}' par la valeur détectée '${detectedRiskLevel}'`);
+          result.riskLevel = detectedRiskLevel;
+        }
       }
       
       return result;
@@ -130,10 +137,10 @@ async function analyzePDFContent(text, filename) {
         if (level === 'faible') fallbackRiskLevel = 'faible';
         else if (level === 'élevée' || level === 'elevee') fallbackRiskLevel = 'élevée';
         
-        console.log(`Niveau d'urgence détecté dans le fallback: ${fallbackRiskLevel}`);
+        logger.debug(`Niveau d'urgence détecté dans le fallback: ${fallbackRiskLevel}`);
       }
     } catch (innerError) {
-      console.error("Erreur lors de la détection de secours du niveau de risque:", innerError);
+      logger.error("Erreur lors de la détection de secours du niveau de risque:", innerError);
     }
     
     // Retourner des valeurs par défaut en cas d'erreur

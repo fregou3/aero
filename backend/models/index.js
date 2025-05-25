@@ -34,6 +34,7 @@ db.inventoryItem = require("./inventoryItem.model.js")(sequelize, Sequelize);
 db.technicalDocument = require("./technicalDocument.model.js")(sequelize, Sequelize);
 db.notification = require("./notification.model.js")(sequelize, Sequelize);
 db.documentAnalysis = require("./documentAnalysis.model.js")(sequelize, Sequelize);
+db.vectorDbStatus = require("./vectorDbStatus.model.js")(sequelize, Sequelize);
 
 // Define relationships
 db.aircraft.hasMany(db.aircraftPart, { as: "parts" });

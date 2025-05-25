@@ -1,0 +1,434 @@
+# BACKLOG AERO 2.2
+
+## STRUCTURE DU BACKLOG
+Ce backlog est organisé selon la méthodologie Scrum :
+- EPICS : Grandes fonctionnalités ou thèmes qui regroupent plusieurs user stories
+- USER STORIES : Fonctionnalités du point de vue de l'utilisateur (format : "En tant que [rôle], je veux [action] afin de [bénéfice]")
+- TICKETS : Tâches techniques spécifiques nécessaires pour implémenter les user stories
+
+Chaque élément possède :
+- Un identifiant unique
+- Une priorité (Critical, High, Medium, Low)
+- Une estimation en points de complexité (1, 2, 3, 5, 8, 13)
+- Un statut (To Do, In Progress, Done)
+
+---
+
+# EPICS
+
+## EPIC-001 : Gestion des documents techniques
+**Description** : Permettre l'importation, l'analyse et la gestion de documents techniques aéronautiques
+**Priorité** : Critical
+**Statut** : In Progress
+
+## EPIC-002 : Assistant IA
+**Description** : Fournir un assistant IA capable de répondre aux questions techniques en se basant sur les documents indexés
+**Priorité** : Critical
+**Statut** : In Progress
+
+## EPIC-003 : Gestion des utilisateurs et des rôles
+**Description** : Gérer les utilisateurs, l'authentification et les autorisations selon les rôles
+**Priorité** : High
+**Statut** : To Do
+
+## EPIC-004 : Tableau de bord et statistiques
+**Description** : Fournir des visualisations et des statistiques sur l'utilisation de l'application
+**Priorité** : Medium
+**Statut** : To Do
+
+## EPIC-005 : Intégration avec les systèmes externes
+**Description** : Permettre l'intégration avec d'autres systèmes et bases de données aéronautiques
+**Priorité** : Low
+**Statut** : To Do
+
+---
+
+# USER STORIES
+
+## EPIC-001 : Gestion des documents techniques
+
+### US-001 : Importation de documents PDF
+**Description** : En tant que technicien, je veux pouvoir importer des documents PDF techniques afin de les rendre disponibles dans le système
+**Priorité** : Critical
+**Estimation** : 5
+**Statut** : Done
+
+### US-002 : Analyse automatique des documents
+**Description** : En tant que technicien, je veux que le système analyse automatiquement le contenu des documents importés afin d'en extraire les informations pertinentes
+**Priorité** : Critical
+**Estimation** : 8
+**Statut** : Done
+
+### US-003 : Indexation des documents dans la base vectorielle
+**Description** : En tant que technicien, je veux que les documents soient indexés dans une base vectorielle afin de permettre des recherches sémantiques
+**Priorité** : Critical
+**Estimation** : 8
+**Statut** : Done
+
+### US-004 : Réindexation des documents
+**Description** : En tant qu'administrateur, je veux pouvoir vider et réindexer la base vectorielle afin de mettre à jour les informations ou corriger des problèmes d'indexation
+**Priorité** : High
+**Estimation** : 5
+**Statut** : Done
+
+### US-005 : Visualisation des documents
+**Description** : En tant que technicien, je veux pouvoir visualiser les documents importés afin de consulter leur contenu
+**Priorité** : Medium
+**Estimation** : 3
+**Statut** : To Do
+
+### US-006 : Organisation des documents par catégories
+**Description** : En tant que technicien, je veux pouvoir organiser les documents par catégories afin de faciliter leur gestion
+**Priorité** : Medium
+**Estimation** : 5
+**Statut** : To Do
+
+### US-007 : Recherche de documents par métadonnées
+**Description** : En tant que technicien, je veux pouvoir rechercher des documents par titre, auteur, date ou autres métadonnées afin de les retrouver rapidement
+**Priorité** : Medium
+**Estimation** : 5
+**Statut** : To Do
+
+## EPIC-002 : Assistant IA
+
+### US-008 : Interface de chat avec l'assistant IA
+**Description** : En tant qu'utilisateur, je veux pouvoir poser des questions à un assistant IA via une interface de chat afin d'obtenir des réponses techniques
+**Priorité** : Critical
+**Estimation** : 8
+**Statut** : Done
+
+### US-009 : Réponses basées sur les documents indexés
+**Description** : En tant qu'utilisateur, je veux que l'assistant IA génère des réponses basées sur les documents techniques indexés afin d'obtenir des informations précises et fiables
+**Priorité** : Critical
+**Estimation** : 13
+**Statut** : Done
+
+### US-010 : Affichage des sources documentaires
+**Description** : En tant qu'utilisateur, je veux voir les sources documentaires utilisées par l'IA pour générer ses réponses afin de pouvoir vérifier les informations
+**Priorité** : High
+**Estimation** : 5
+**Statut** : Done
+
+### US-011 : Amélioration de la pertinence des réponses
+**Description** : En tant qu'utilisateur, je veux que l'assistant IA fournisse des réponses plus pertinentes grâce à une recherche sémantique améliorée
+**Priorité** : High
+**Estimation** : 8
+**Statut** : Done
+
+### US-012 : Historique des conversations
+**Description** : En tant qu'utilisateur, je veux pouvoir consulter l'historique de mes conversations avec l'assistant IA afin de retrouver des informations précédemment demandées
+**Priorité** : Medium
+**Estimation** : 5
+**Statut** : To Do
+
+### US-013 : Exportation des conversations
+**Description** : En tant qu'utilisateur, je veux pouvoir exporter mes conversations avec l'assistant IA afin de les partager ou les archiver
+**Priorité** : Low
+**Estimation** : 3
+**Statut** : To Do
+
+## EPIC-003 : Gestion des utilisateurs et des rôles
+
+### US-014 : Création de compte utilisateur
+**Description** : En tant que nouvel utilisateur, je veux pouvoir créer un compte afin d'accéder à l'application
+**Priorité** : High
+**Estimation** : 5
+**Statut** : To Do
+
+### US-015 : Authentification sécurisée
+**Description** : En tant qu'utilisateur, je veux pouvoir m'authentifier de manière sécurisée afin de protéger mon compte
+**Priorité** : High
+**Estimation** : 8
+**Statut** : To Do
+
+### US-016 : Gestion des rôles et permissions
+**Description** : En tant qu'administrateur, je veux pouvoir définir des rôles et des permissions afin de contrôler l'accès aux fonctionnalités de l'application
+**Priorité** : High
+**Estimation** : 8
+**Statut** : To Do
+
+### US-017 : Profil utilisateur
+**Description** : En tant qu'utilisateur, je veux pouvoir gérer mon profil afin de mettre à jour mes informations personnelles
+**Priorité** : Medium
+**Estimation** : 3
+**Statut** : To Do
+
+## EPIC-004 : Tableau de bord et statistiques
+
+### US-018 : Tableau de bord d'activité
+**Description** : En tant qu'administrateur, je veux avoir accès à un tableau de bord d'activité afin de suivre l'utilisation de l'application
+**Priorité** : Medium
+**Estimation** : 8
+**Statut** : To Do
+
+### US-019 : Statistiques d'utilisation de l'assistant IA
+**Description** : En tant qu'administrateur, je veux voir des statistiques sur l'utilisation de l'assistant IA afin d'évaluer son efficacité
+**Priorité** : Medium
+**Estimation** : 5
+**Statut** : To Do
+
+### US-020 : Rapports sur les documents les plus consultés
+**Description** : En tant qu'administrateur, je veux pouvoir générer des rapports sur les documents les plus consultés afin d'identifier les informations les plus demandées
+**Priorité** : Low
+**Estimation** : 5
+**Statut** : To Do
+
+## EPIC-005 : Intégration avec les systèmes externes
+
+### US-021 : API pour l'intégration externe
+**Description** : En tant que développeur, je veux disposer d'une API documentée afin d'intégrer l'application avec d'autres systèmes
+**Priorité** : Medium
+**Estimation** : 8
+**Statut** : To Do
+
+### US-022 : Import de données depuis des systèmes externes
+**Description** : En tant qu'administrateur, je veux pouvoir importer des données depuis des systèmes externes afin d'enrichir la base de connaissances
+**Priorité** : Low
+**Estimation** : 8
+**Statut** : To Do
+
+### US-023 : Export de données vers des systèmes externes
+**Description** : En tant qu'administrateur, je veux pouvoir exporter des données vers des systèmes externes afin de les utiliser dans d'autres applications
+**Priorité** : Low
+**Estimation** : 5
+**Statut** : To Do
+
+---
+
+# TICKETS
+
+## US-001 : Importation de documents PDF
+
+### T-001 : Créer l'interface d'upload de fichiers PDF
+**Description** : Développer l'interface utilisateur permettant de sélectionner et télécharger des fichiers PDF
+**Priorité** : Critical
+**Estimation** : 2
+**Statut** : Done
+
+### T-002 : Implémenter la validation des fichiers PDF
+**Description** : Vérifier que les fichiers téléchargés sont bien des PDF valides et respectent les contraintes de taille
+**Priorité** : High
+**Estimation** : 1
+**Statut** : Done
+
+### T-003 : Développer le service de stockage des fichiers
+**Description** : Créer le service backend pour stocker les fichiers PDF téléchargés
+**Priorité** : Critical
+**Estimation** : 2
+**Statut** : Done
+
+## US-002 : Analyse automatique des documents
+
+### T-004 : Intégrer la bibliothèque d'extraction de texte PDF
+**Description** : Intégrer et configurer une bibliothèque pour extraire le texte des fichiers PDF
+**Priorité** : Critical
+**Estimation** : 3
+**Statut** : Done
+
+### T-005 : Développer le service d'analyse de texte
+**Description** : Créer le service qui analyse le texte extrait pour en tirer des informations structurées
+**Priorité** : Critical
+**Estimation** : 5
+**Statut** : Done
+
+### T-006 : Implémenter la persistance des résultats d'analyse
+**Description** : Stocker les résultats d'analyse dans la base de données
+**Priorité** : High
+**Estimation** : 2
+**Statut** : Done
+
+## US-003 : Indexation des documents dans la base vectorielle
+
+### T-007 : Configurer Chroma DB
+**Description** : Installer et configurer Chroma DB pour le stockage des embeddings
+**Priorité** : Critical
+**Estimation** : 3
+**Statut** : Done
+
+### T-008 : Intégrer l'API OpenAI pour la génération d'embeddings
+**Description** : Intégrer l'API OpenAI pour générer des embeddings à partir du texte des documents
+**Priorité** : Critical
+**Estimation** : 3
+**Statut** : Done
+
+### T-009 : Développer le service d'indexation des documents
+**Description** : Créer le service qui indexe les documents dans la base vectorielle
+**Priorité** : Critical
+**Estimation** : 5
+**Statut** : Done
+
+### T-010 : Implémenter la gestion des erreurs d'indexation
+**Description** : Gérer les erreurs qui peuvent survenir pendant l'indexation et fournir des messages d'erreur appropriés
+**Priorité** : High
+**Estimation** : 2
+**Statut** : Done
+
+## US-004 : Réindexation des documents
+
+### T-011 : Développer l'API pour vider la base vectorielle
+**Description** : Créer un endpoint API pour vider complètement la base vectorielle
+**Priorité** : High
+**Estimation** : 2
+**Statut** : Done
+
+### T-012 : Implémenter l'interface utilisateur pour la réindexation
+**Description** : Ajouter un bouton dans l'interface pour vider et réindexer la base vectorielle
+**Priorité** : High
+**Estimation** : 1
+**Statut** : Done
+
+### T-013 : Développer le processus de réindexation en deux étapes
+**Description** : Implémenter le processus qui vide d'abord la base puis réindexe tous les documents
+**Priorité** : High
+**Estimation** : 2
+**Statut** : Done
+
+## US-008 : Interface de chat avec l'assistant IA
+
+### T-014 : Concevoir l'interface de chat
+**Description** : Concevoir une interface de chat intuitive et responsive
+**Priorité** : Critical
+**Estimation** : 3
+**Statut** : Done
+
+### T-015 : Implémenter la saisie et l'envoi de messages
+**Description** : Développer les fonctionnalités de saisie et d'envoi de messages dans l'interface de chat
+**Priorité** : Critical
+**Estimation** : 2
+**Statut** : Done
+
+### T-016 : Développer l'affichage des messages de l'utilisateur et de l'IA
+**Description** : Implémenter l'affichage des messages échangés entre l'utilisateur et l'assistant IA
+**Priorité** : Critical
+**Estimation** : 3
+**Statut** : Done
+
+## US-009 : Réponses basées sur les documents indexés
+
+### T-017 : Développer le service de recherche vectorielle
+**Description** : Créer le service qui recherche les documents pertinents dans la base vectorielle
+**Priorité** : Critical
+**Estimation** : 5
+**Statut** : Done
+
+### T-018 : Intégrer l'API OpenAI pour la génération de réponses
+**Description** : Intégrer l'API OpenAI pour générer des réponses basées sur les documents pertinents
+**Priorité** : Critical
+**Estimation** : 5
+**Statut** : Done
+
+### T-019 : Optimiser les prompts pour l'API OpenAI
+**Description** : Concevoir et optimiser les prompts envoyés à l'API OpenAI pour obtenir des réponses pertinentes
+**Priorité** : High
+**Estimation** : 3
+**Statut** : Done
+
+## US-010 : Affichage des sources documentaires
+
+### T-020 : Implémenter le suivi des sources utilisées
+**Description** : Développer le mécanisme qui suit quelles sources ont été utilisées pour générer une réponse
+**Priorité** : High
+**Estimation** : 2
+**Statut** : Done
+
+### T-021 : Concevoir l'interface d'affichage des sources
+**Description** : Concevoir l'interface qui affiche les sources documentaires utilisées
+**Priorité** : High
+**Estimation** : 2
+**Statut** : Done
+
+### T-022 : Développer les liens vers les documents sources
+**Description** : Implémenter des liens qui permettent d'accéder directement aux documents sources
+**Priorité** : Medium
+**Estimation** : 1
+**Statut** : To Do
+
+## US-011 : Amélioration de la pertinence des réponses
+
+### T-023 : Implémenter la recherche hybride
+**Description** : Développer un système de recherche qui combine la recherche vectorielle et la recherche par mots-clés
+**Priorité** : High
+**Estimation** : 5
+**Statut** : Done
+
+### T-024 : Ajouter l'expansion sémantique des requêtes
+**Description** : Enrichir les requêtes avec des termes sémantiquement proches pour améliorer les résultats
+**Priorité** : High
+**Estimation** : 3
+**Statut** : Done
+
+### T-025 : Implémenter un système de pondération des résultats
+**Description** : Développer un système qui pondère les résultats en fonction de différents critères (similarité vectorielle, présence de mots-clés, métadonnées)
+**Priorité** : High
+**Estimation** : 3
+**Statut** : Done
+
+### T-026 : Ajouter un filtrage par seuil de pertinence
+**Description** : Filtrer les résultats dont la pertinence est inférieure à un certain seuil
+**Priorité** : Medium
+**Estimation** : 1
+**Statut** : Done
+
+---
+
+# BACKLOG TECHNIQUE
+
+## TECH-001 : Optimisation des performances
+**Description** : Optimiser les performances de l'application, notamment pour la recherche vectorielle et la génération de réponses
+**Priorité** : Medium
+**Estimation** : 8
+**Statut** : To Do
+
+## TECH-002 : Amélioration de la sécurité
+**Description** : Renforcer la sécurité de l'application (authentification, autorisations, protection des données)
+**Priorité** : High
+**Estimation** : 8
+**Statut** : To Do
+
+## TECH-003 : Tests automatisés
+**Description** : Mettre en place des tests automatisés (unitaires, d'intégration, end-to-end)
+**Priorité** : Medium
+**Estimation** : 13
+**Statut** : To Do
+
+## TECH-004 : Documentation technique
+**Description** : Créer et maintenir une documentation technique complète
+**Priorité** : Medium
+**Estimation** : 5
+**Statut** : To Do
+
+## TECH-005 : Déploiement et CI/CD
+**Description** : Mettre en place un pipeline de déploiement continu
+**Priorité** : Medium
+**Estimation** : 8
+**Statut** : To Do
+
+## TECH-006 : Monitoring et logging
+**Description** : Implémenter un système de monitoring et de logging pour suivre l'état de l'application
+**Priorité** : Medium
+**Estimation** : 5
+**Statut** : To Do
+
+---
+
+# PROCHAINS SPRINTS SUGGÉRÉS
+
+## Sprint 1 (En cours / Terminé)
+- Focus sur l'importation, l'analyse et l'indexation des documents
+- Mise en place de l'assistant IA basique
+
+## Sprint 2 (Prochain)
+- Amélioration de l'assistant IA (pertinence des réponses, affichage des sources)
+- Début de l'implémentation de la gestion des utilisateurs
+
+## Sprint 3
+- Finalisation de la gestion des utilisateurs et des rôles
+- Visualisation et organisation des documents
+
+## Sprint 4
+- Tableau de bord et statistiques
+- Historique et exportation des conversations
+
+## Sprint 5
+- Intégration avec les systèmes externes
+- Optimisations techniques et améliorations de la sécurité

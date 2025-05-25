@@ -9,8 +9,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "@langchain/community": "^0.3.44",
+    "@langchain/openai": "^0.5.11",
     "bcryptjs": "^2.4.3",
     "bull": "^4.10.4",
+    "chromadb": "^2.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",

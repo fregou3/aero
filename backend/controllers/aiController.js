@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const pdfService = require('../services/pdfService');
 const vectorService = require('../services/vectorService');
 const winston = require('winston');
@@ -53,28 +54,65 @@ const analyzeDocuments = async (req, res) => {
 };
 
 /**
- * Indexe tous les documents PDF du répertoire docs dans la base vectorielle
+ * Indexe tous les documents PDF du répertoire docs directement dans la base vectorielle
+ * sans dépendre de la base PostgreSQL
  * @param {Object} req - Requête Express
  * @param {Object} res - Réponse Express
  */
 const indexDocuments = async (req, res) => {
   try {
+    console.log('Début de la fonction indexDocuments');
+    
     // Vérifier si la clé API OpenAI est définie
     if (!process.env.OPENAI_API_KEY) {
+      console.log('Clé API OpenAI non configurée');
       return res.status(400).json({
         success: false,
         message: "La clé API OpenAI n'est pas configurée. Veuillez la définir dans le fichier .env"
       });
     }
 
-    const docsDirectory = path.join(__dirname, '..', '..', 'docs');
+    // Utiliser un chemin relatif pour le répertoire docs (au même niveau que backend)
+    const docsDirectory = path.resolve(path.join(__dirname, '..', '..', 'docs'));
+    console.log(`Indexation des documents du répertoire: ${docsDirectory}`);
     logger.info(`Indexation des documents du répertoire: ${docsDirectory}`);
     
-    // Indexer tous les PDF du répertoire
-    const result = await vectorService.indexDocuments(docsDirectory);
+    // Vérifier si le répertoire existe
+    if (!fs.existsSync(docsDirectory)) {
+      console.log(`Le répertoire ${docsDirectory} n'existe pas`);
+      return res.status(400).json({
+        success: false,
+        message: `Le répertoire des documents ${docsDirectory} n'existe pas`
+      });
+    }
     
-    return res.status(200).json(result);
+    // Trouver tous les fichiers PDF dans le répertoire
+    console.log('Recherche des fichiers PDF dans le répertoire');
+    const pdfFiles = await pdfService.findPDFFiles(docsDirectory);
+    
+    if (!pdfFiles || pdfFiles.length === 0) {
+      console.log('Aucun fichier PDF trouvé dans le répertoire');
+      return res.status(400).json({
+        success: false,
+        message: "Aucun fichier PDF n'a été trouvé dans le répertoire des documents"
+      });
+    }
+    
+    console.log(`${pdfFiles.length} fichiers PDF trouvés dans le répertoire`);
+    
+    // Indexer directement les documents dans la base vectorielle sans passer par PostgreSQL
+    console.log('Tentative d\'indexation des documents dans la base vectorielle');
+    const result = await vectorService.indexDocuments(docsDirectory);
+    console.log('Résultat de l\'indexation:', result);
+    
+    return res.status(200).json({
+      success: true,
+      documentCount: result.documentCount || pdfFiles.length,
+      isInitialized: result.isInitialized,
+      message: `${result.documentCount || pdfFiles.length} documents ont été indexés avec succès dans la base vectorielle`
+    });
   } catch (error) {
+    console.error('Erreur générale lors de l\'indexation des documents:', error);
     logger.error('Erreur lors de l\'indexation des documents:', error);
     return res.status(500).json({
       success: false,
@@ -88,11 +126,14 @@ const indexDocuments = async (req, res) => {
  * @param {Object} req - Requête Express
  * @param {Object} res - Réponse Express
  */
-const getVectorDbStatus = (req, res) => {
+const getVectorDbStatus = async (req, res) => {
   try {
-    const status = vectorService.getVectorDbStatus();
+    console.log('Requête de statut de la base vectorielle reçue');
+    const status = await vectorService.getVectorDbStatus();
+    console.log('Statut récupéré:', status);
     return res.status(200).json(status);
   } catch (error) {
+    console.error('Erreur lors de la récupération du statut de la base vectorielle:', error);
     logger.error('Erreur lors de la récupération du statut de la base vectorielle:', error);
     return res.status(500).json({
       success: false,
@@ -188,11 +229,46 @@ const getDocumentAnalyses = async (req, res) => {
   }
 };
 
+/**
+ * Vide la base vectorielle
+ * @param {Object} req - Requête Express
+ * @param {Object} res - Réponse Express
+ */
+const clearVectorDb = async (req, res) => {
+  try {
+    console.log('Requête de vidage de la base vectorielle reçue');
+    const result = await vectorService.clearVectorDb();
+    console.log('Résultat du vidage:', result);
+    
+    if (result.success) {
+      return res.status(200).json({
+        success: true,
+        message: 'Base vectorielle vidée avec succès',
+        isInitialized: false,
+        documentCount: 0
+      });
+    } else {
+      return res.status(500).json({
+        success: false,
+        message: result.message || 'Erreur lors du vidage de la base vectorielle'
+      });
+    }
+  } catch (error) {
+    console.error('Erreur lors du vidage de la base vectorielle:', error);
+    logger.error('Erreur lors du vidage de la base vectorielle:', error);
+    return res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
 module.exports = {
   analyzeDocuments,
   indexDocuments,
   getVectorDbStatus,
   searchDocuments,
   generateAnswer,
-  getDocumentAnalyses
+  getDocumentAnalyses,
+  clearVectorDb
 };

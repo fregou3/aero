@@ -18,3 +18,5 @@ docker exec -it 982d52e8a995 psql -U postgres -d aeromaintenance -f /tmp/count_d
 
 démarrer front en powershell
 $env:PORT=3042; npm start
+
+Urgent : joints et disques

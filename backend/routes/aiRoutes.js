@@ -50,6 +50,20 @@ router.get('/vector-db-status', aiController.getVectorDbStatus);
 
 /**
  * @swagger
+ * /api/ai/clear-vector-db:
+ *   post:
+ *     summary: Vide la base vectorielle
+ *     tags: [AI]
+ *     responses:
+ *       200:
+ *         description: Base vectorielle vidée avec succès
+ *       500:
+ *         description: Erreur serveur
+ */
+router.post('/clear-vector-db', aiController.clearVectorDb);
+
+/**
+ * @swagger
  * /api/ai/search-documents:
  *   post:
  *     summary: Recherche des documents similaires à une requête
