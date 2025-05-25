@@ -26,6 +26,8 @@ import DocumentDetail from './pages/documents/DocumentDetail';
 import WorkflowPage from './pages/workflow/WorkflowPage';
 import AnalysisPage from './pages/analysis/AnalysisPage';
 import AIAssistantPage from './pages/ai/AIAssistantPage';
+import AIConsolidationPage from './pages/ai/AIConsolidationPage';
+import AIGlobalVisionPage from './pages/ai/AIGlobalVisionPage';
 import AircraftViewer from './pages/viewer/AircraftViewer';
 import UserProfile from './pages/user/UserProfile';
 import NotFound from './pages/NotFound';
@@ -75,6 +77,8 @@ function App() {
         <Route path="/workflow" element={<WorkflowPage />} />
         <Route path="/analysis" element={<AnalysisPage />} />
         <Route path="/ai" element={<AIAssistantPage />} />
+        <Route path="/ai-consolidation" element={<AIConsolidationPage />} />
+        <Route path="/ai-global-vision" element={<AIGlobalVisionPage />} />
         <Route path="/viewer/:id" element={<AircraftViewer />} />
         <Route path="/profile" element={<UserProfile />} />
       </Route>

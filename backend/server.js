@@ -44,6 +44,40 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Servir les fichiers PDF statiques
+const path = require('path');
+const docsPath = path.resolve(__dirname, '../docs');
+console.log(`Chemin absolu vers les documents: ${docsPath}`);
+
+// Vérifier que le dossier existe
+const fs = require('fs');
+if (fs.existsSync(docsPath)) {
+  console.log(`Le dossier des documents existe: ${docsPath}`);
+  // Lister les fichiers pour débogage
+  const files = fs.readdirSync(docsPath);
+  console.log(`Nombre de fichiers dans le dossier: ${files.length}`);
+  console.log(`Premiers fichiers: ${files.slice(0, 5).join(', ')}`);
+} else {
+  console.error(`ERREUR: Le dossier des documents n'existe pas: ${docsPath}`);
+}
+
+// Configuration pour servir les fichiers statiques
+app.use('/docs', express.static(docsPath));
+
+// Route de test pour vérifier l'accès aux documents
+app.get('/test-docs/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(docsPath, filename);
+  
+  if (fs.existsSync(filePath)) {
+    console.log(`Fichier trouvé: ${filePath}`);
+    res.sendFile(filePath);
+  } else {
+    console.error(`Fichier non trouvé: ${filePath}`);
+    res.status(404).send(`Fichier non trouvé: ${filename}`);
+  }
+});
+
 // Request logger middleware
 app.use((req, res, next) => {
   logger.info(`${req.method} ${req.url}`);

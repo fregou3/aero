@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport de Synthèse des Risques Identifiés</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #3498db;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2980b9;
+            margin-top: 25px;
+        }
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        .matrix, .graph, .table, .diagram {
+            font-family: monospace;
+            white-space: pre;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .recommendations {
+            background-color: #f0f7fb;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .conclusion {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rapport de Synthèse des Risques Identifiés</h1>
+
+    <h2>Introduction</h2>
+    <p>Ce rapport présente une synthèse complète des risques identifiés à partir de l'analyse de 56 documents techniques relatifs à la maintenance et à l'exploitation aéronautique. L'objectif est de consolider l'ensemble des risques détectés, de les classifier selon leur nature et leur impact potentiel, et de proposer des recommandations adaptées pour leur atténuation.</p>
+    
+    <p>L'industrie aéronautique est caractérisée par des exigences de sécurité et de fiabilité particulièrement élevées. La gestion des risques y constitue un pilier fondamental, permettant d'anticiper les défaillances potentielles et de mettre en place des mesures préventives appropriées. Ce rapport s'inscrit dans cette démarche d'amélioration continue de la sécurité et de la performance opérationnelle.</p>
+    
+    <p>La méthodologie employée pour cette analyse a consisté en une extraction systématique des informations pertinentes contenues dans les documents fournis, suivie d'une classification des risques selon quatre catégories principales : risques techniques, risques opérationnels, risques liés à la maintenance et risques de sécurité. Pour chaque catégorie, nous avons identifié les facteurs de risque récurrents, évalué leur criticité et formulé des recommandations spécifiques.</p>
+    
+    <p>Ce rapport est structuré en plusieurs sections, chacune dédiée à une catégorie de risques. Une attention particulière a été portée à l'identification des interconnexions entre ces différentes catégories, afin de proposer une approche holistique de la gestion des risques. Des éléments visuels, tels que des tableaux de synthèse et des matrices de risques, ont été intégrés pour faciliter la compréhension et la hiérarchisation des enjeux identifiés.</p>
+    
+    <p>Les recommandations formulées dans ce rapport visent à renforcer les processus existants, à optimiser les procédures de maintenance et d'inspection, et à améliorer la formation du personnel. Elles s'appuient sur les meilleures pratiques du secteur et sur les enseignements tirés des incidents analysés dans les documents fournis.</p>
+
+    <h2>Risques Techniques</h2>
+    <p>L'analyse des documents techniques a révélé plusieurs catégories de risques techniques majeurs liés aux composants et systèmes aéronautiques. Ces risques concernent principalement les défaillances structurelles et fonctionnelles pouvant affecter la sécurité des vols et la fiabilité des opérations.</p>
+
+    <h3>Défaillances des composants moteurs</h3>
+    <p>L'un des risques techniques les plus critiques identifiés concerne les défaillances des composants moteurs. Le document "doc3_analyse_defaillance_moteur.pdf" rapporte notamment une défaillance catastrophique d'une aube de turbine haute pression (HPT) sur un moteur CFM56-7B26, ayant entraîné des dommages en cascade sur plusieurs modules du moteur. La cause racine identifiée est une fissuration par fatigue thermomécanique initiée au niveau du bord de fuite de l'aube. Ce type de défaillance présente un risque particulièrement élevé car il peut conduire à un arrêt moteur en vol, comme ce fut le cas lors du vol LH2047 entre Francfort et Madrid, nécessitant un déroutement vers l'aéroport de Lyon Saint-Exupéry.</p>
+    
+    <p>L'analyse des données de fiabilité de la flotte CFM56-7B et l'examen des rapports d'incidents similaires suggèrent que ce type de défaillance pourrait être lié à des contraintes thermomécaniques excessives lors des cycles de montée en puissance et de refroidissement. Les aubes de turbine sont soumises à des températures extrêmes et à des contraintes mécaniques importantes, ce qui les rend particulièrement vulnérables à la fatigue des matériaux.</p>
+    
+    <p>Les documents d'inspection des aubes (doc1_rapport_inspection_aubes.pdf et doc8_fiche_inspection_aubes.pdf) mettent également en évidence des risques de dégradation progressive des aubes, pouvant passer inaperçus lors des inspections de routine si les procédures ne sont pas scrupuleusement respectées.</p>
+
+    <h3>Défaillances des systèmes hydrauliques</h3>
+    <p>Les systèmes hydrauliques constituent un autre domaine à risque technique élevé. Le document "doc2_procedure_verification_hydraulique.pdf" souligne les conséquences potentielles d'une défaillance des servovérins, qui pourrait compromettre le contrôle de l'aéronef. Les risques identifiés incluent des fuites hydrauliques, des contaminations du fluide, et des dysfonctionnements des composants critiques comme les pompes et les accumulateurs.</p>
+    
+    <p>Le document "doc10_manuel_tests_sortie.pdf" met en évidence les risques associés à la sortie d'urgence du train d'atterrissage en cas de défaillance des systèmes hydrauliques et électriques normaux. Une défaillance du système de secours pourrait avoir des conséquences catastrophiques lors de l'atterrissage.</p>
+
+    <h3>Défaillances des systèmes électroniques et de communication</h3>
+    <p>Les systèmes électroniques et de communication présentent également des risques techniques significatifs. Les documents relatifs aux certificats de conformité des écrans (doc1_certificat_conformite_ecrans.pdf) et des antennes (doc1_certificat_conformite_antennes.pdf) soulignent l'importance de la fiabilité de ces composants pour la sécurité des vols.</p>
+    
+    <p>Le document "doc9_rapport_securite_communication.pdf" met en évidence les risques liés aux défaillances des systèmes de communication, qui peuvent compromettre la coordination entre l'équipage et les services de contrôle aérien, augmentant ainsi le risque d'incidents ou d'accidents.</p>
+
+    <h3>Défaillances des systèmes de navigation et d'instrumentation</h3>
+    <p>Les altimètres et autres instruments de navigation sont critiques pour la sécurité des vols. Le document "doc10_manuel_tests_altimetres.pdf" souligne l'importance des tests réguliers pour détecter toute anomalie critique affectant la précision ou la fiabilité des indications d'altitude.</p>
+    
+    <p>Les risques associés aux défaillances des calculateurs (doc4_fiche_verification_calculateurs.pdf) et des transpondeurs (doc3_rapport_analyse_transpondeurs.pdf) sont également significatifs, car ces systèmes sont essentiels pour la navigation et la communication avec les services de contrôle aérien.</p>
+
+    <h2>Risques Opérationnels</h2>
+    <p>L'analyse des documents a permis d'identifier plusieurs risques opérationnels majeurs qui peuvent affecter la sécurité et l'efficacité des opérations aériennes. Ces risques sont liés aux procédures, aux facteurs humains et aux conditions d'exploitation des aéronefs.</p>
+
+    <h3>Incidents liés aux procédures de vol et de maintenance</h3>
+    <p>Plusieurs documents font état d'incidents opérationnels résultant de procédures inadéquates ou mal appliquées. Le document "doc3_analyse_defaillance_moteur.pdf" rapporte un incident survenu lors du vol LH2047 entre Francfort et Madrid, nécessitant un déroutement vers l'aéroport de Lyon Saint-Exupéry. Bien que l'appareil ait atterri sans incident supplémentaire, cet événement souligne l'importance des procédures d'urgence et de la formation des équipages à la gestion des situations critiques.</p>
+    
+    <p>Le document "doc5_bulletin_service_pressurisation.pdf" mentionne des rapports d'incidents signalant des cas de fluctuations anormales de la pression cabine pendant les phases de montée et de descente. Ces incidents, bien que n'ayant pas entraîné de conséquences graves, représentent un risque potentiel pour le confort et la sécurité des passagers et de l'équipage. Les causes identifiées incluent des défauts de calibration des systèmes de régulation de pression et des procédures de maintenance inadéquates.</p>
+
+    <h3>Risques liés aux opérations au sol</h3>
+    <p>Les opérations au sol constituent également une source significative de risques opérationnels. Le document "doc7_guide_maintenance_trains.pdf" souligne l'importance d'une maintenance rigoureuse des trains d'atterrissage pour éviter des incidents coûteux et potentiellement dangereux. Il précise que des procédures de maintenance appropriées peuvent réduire considérablement les risques d'incidents lors des phases critiques de décollage et d'atterrissage.</p>
+    
+    <p>Le document "doc8_fiche_inspection_dommages.pdf" recommande des inspections spécifiques après un incident signalé, tel qu'un impact d'oiseau ou un choc au sol. Ces inspections sont essentielles pour détecter d'éventuels dommages structurels qui pourraient compromettre la sécurité des vols ultérieurs.</p>
+
+    <h3>Défaillances des systèmes de communication</h3>
+    <p>Les problèmes de communication représentent un risque opérationnel majeur dans l'aviation. Le document "doc9_rapport_securite_communication.pdf" analyse les incidents et accidents liés aux défaillances des systèmes de communication. Il inclut des statistiques d'incidents sur la période 2020-2025, permettant d'identifier les tendances et les facteurs contributifs.</p>
+    
+    <p>Les défaillances de communication peuvent résulter de problèmes techniques, comme des pannes d'équipement, mais aussi de facteurs humains, tels que des malentendus ou des erreurs d'interprétation. Ces défaillances peuvent avoir des conséquences graves, notamment lors des phases critiques du vol comme l'approche et l'atterrissage.</p>
+
+    <h3>Risques liés à la gestion des ressources</h3>
+    <p>La gestion inefficace des ressources, tant humaines que matérielles, constitue un autre risque opérationnel significatif. Les documents analysés suggèrent que des contraintes de temps ou de ressources peuvent conduire à des compromis sur la qualité des inspections et des maintenances, augmentant ainsi le risque d'incidents.</p>
+    
+    <p>Par exemple, le document "doc7_guide_maintenance_trains.pdf" souligne l'importance d'allouer suffisamment de temps et de ressources à la maintenance des trains d'atterrissage, composants critiques pour la sécurité des opérations au sol. Une maintenance précipitée ou réalisée avec des ressources insuffisantes peut entraîner des omissions ou des erreurs aux conséquences potentiellement graves.</p>
+
+    <h2>Risques liés à la Maintenance</h2>
+    <p>L'analyse des documents a mis en évidence plusieurs risques significatifs liés aux activités de maintenance aéronautique. Ces risques peuvent compromettre la fiabilité des aéronefs et, par conséquent, la sécurité des vols.</p>
+
+    <h3>Procédures d'inspection inadéquates</h3>
+    <p>Les documents analysés révèlent que des procédures d'inspection inadéquates ou mal appliquées constituent un risque majeur. Le document "doc10_manuel_tests_non_destructifs.txt" souligne l'importance des tests non-destructifs (NDT) comme pilier essentiel de la sécurité aéronautique. Ces tests permettent d'évaluer les propriétés des matériaux et composants sans les endommager, contribuant ainsi directement à la sécurité des vols.</p>
+    
+    <p>Le manuel précise que l'inspection visuelle, bien qu'étant la méthode la plus fondamentale, est souvent la première étape de tout programme d'inspection. Cependant, elle présente des limitations importantes, notamment en ce qui concerne la détection de défauts internes ou non visibles à l'œil nu. Une dépendance excessive à l'inspection visuelle, sans recours à des méthodes complémentaires plus sophistiquées, peut conduire à la non-détection de défauts critiques.</p>
+    
+    <p>Le document "doc1_rapport_inspection_aubes.pdf" met en évidence des cas où des défauts sur les aubes de turbine n'ont pas été détectés lors des inspections de routine, soulignant ainsi les risques associés à des procédures d'inspection insuffisantes ou mal exécutées.</p>
+
+    <h3>Formation et qualification du personnel de maintenance</h3>
+    <p>La qualification inadéquate du personnel de maintenance représente un autre risque significatif. Le document "doc10_manuel_tests_non_destructifs.txt" fait référence aux exigences réglementaires concernant la qualification du personnel, notamment l'AMC 145.A.30(f) de l'EASA et l'AC 65-31B de la FAA. Ces réglementations soulignent l'importance d'une formation appropriée pour le personnel effectuant des tests non-destructifs.</p>
+    
+    <p>Une formation insuffisante ou obsolète peut conduire à des erreurs d'interprétation des résultats des tests, à l'application incorrecte des procédures, ou à l'utilisation inappropriée des équipements. Ces erreurs peuvent avoir des conséquences graves sur la fiabilité des inspections et, par extension, sur la sécurité des aéronefs.</p>
+
+    <h3>Gestion de la documentation technique</h3>
+    <p>La gestion inadéquate de la documentation technique constitue un risque souvent sous-estimé mais potentiellement grave. Les documents analysés, notamment les manuels de maintenance et les bulletins de service, soulignent l'importance de se référer aux versions les plus récentes des documents techniques et de respecter scrupuleusement les procédures qui y sont décrites.</p>
+    
+    <p>Le document "doc5_bulletin_service_pressurisation.pdf" mentionne des cas de fluctuations anormales de la pression cabine qui pourraient être liés à une application incorrecte des procédures de maintenance, possiblement due à l'utilisation de documentation obsolète ou à une mauvaise interprétation des instructions.</p>
+
+    <h3>Maintenance préventive insuffisante</h3>
+    <p>Plusieurs documents soulignent l'importance de la maintenance préventive pour anticiper et prévenir les défaillances. Le document "doc10_manuel_tests_non_destructifs.txt" évoque la maintenance préventive comme une application clé des tests non-destructifs, permettant de détecter les défauts avant qu'ils ne provoquent une défaillance en vol.</p>
+    
+    <p>Le document "doc7_guide_maintenance_trains.pdf" insiste sur l'importance d'une maintenance rigoureuse des trains d'atterrissage pour éviter des incidents coûteux et potentiellement dangereux. Il précise que des procédures de maintenance appropriées peuvent réduire considérablement les risques d'incidents lors des phases critiques de décollage et d'atterrissage.</p>
+    
+    <p>Une maintenance préventive insuffisante, souvent due à des contraintes de temps ou de ressources, peut conduire à une détérioration progressive des composants et systèmes, augmentant ainsi le risque de défaillances en service.</p>
+
+    <h2>Risques de Sécurité</h2>
+    <p>L'analyse des documents a permis d'identifier plusieurs risques majeurs liés à la sécurité des opérations aéronautiques. Ces risques concernent tant la sécurité des vols que celle du personnel impliqué dans les opérations de maintenance et d'inspection.</p>
+
+    <h3>Risques liés aux tests et inspections</h3>
+    <p>Les documents analysés soulignent l'importance des procédures de sécurité lors des tests et inspections. Le document "doc10_manuel_tests_altimetres.txt" précise que l'accès aux prises statiques doit être dégagé et sécurisé, et que le personnel doit être informé des tests en cours. Ces mesures visent à prévenir les accidents lors des opérations de maintenance et à garantir la fiabilité des tests effectués.</p>
+    
+    <p>Le document "doc10_manuel_tests_non_destructifs.txt" met en évidence que dans l'aviation, la sécurité est primordiale et que les tests non-destructifs jouent un rôle essentiel en détectant les défauts potentiellement dangereux avant qu'ils ne provoquent une défaillance en vol. Cependant, certaines méthodes de test présentent elles-mêmes des risques, notamment les tests radiographiques qui impliquent des risques liés aux radiations et nécessitent des mesures de sécurité strictes.</p>
+    
+    <p>Le document "doc10_manuel_tests_portee.txt" insiste sur l'importance de la communication établie entre les équipes au sol et à bord, le port d'équipements de protection individuelle, et le respect des procédures de sécurité radio pendant les tests.</p>
+
+    <h3>Risques liés aux systèmes d'alerte et de sécurité</h3>
+    <p>Les défaillances des systèmes d'alerte constituent un risque critique pour la sécurité des vols. Le document "doc1_certificat_conformite_ecrans.pdf" fait référence aux normes EASA CS-25.1322 et FAA 14 CFR Part 25.1322 concernant les systèmes d'alerte de l'équipage de conduite. Ces systèmes sont essentiels pour informer l'équipage des situations anormales ou dangereuses nécessitant une attention immédiate.</p>
+    
+    <p>Le document "doc4_fiche_verification_alerte.pdf" souligne l'importance de la vérification régulière des systèmes d'alerte pour garantir leur bon fonctionnement en situation d'urgence. Une défaillance de ces systèmes pourrait empêcher la détection rapide de situations critiques, compromettant ainsi la capacité de l'équipage à réagir de manière appropriée.</p>
+
+    <h3>Risques liés à la manipulation de produits dangereux</h3>
+    <p>Le document "doc10_manuel_tests_non_destructifs.txt" met en évidence les risques associés à l'utilisation de produits chimiques dangereux lors des tests non-destructifs. Il recommande de minimiser l'utilisation de ces produits et de respecter strictement les procédures de sécurité, notamment en lisant et comprenant les fiches de données de sécurité.</p>
+    
+    <p>Les risques liés aux radiations sont également soulignés, avec des recommandations spécifiques telles que le respect des zones de sécurité, le port de dosimètres personnels, et la nécessité de suivre une formation spécifique en radioprotection.</p>
+
+    <h3>Risques liés aux dispositifs mécaniques</h3>
+    <p>Plusieurs documents mentionnent l'importance des dispositifs de sécurité mécaniques. Le document "doc10_manuel_tests_sortie.txt" évoque les mécanismes de déverrouillage d'urgence, les verrous de sécurité, et les amortisseurs de fin de course associés aux systèmes de train d'atterrissage. Il précise également l'importance d'installer les dispositifs de sécurité mécaniques et de vérifier la présence du plombage de sécurité lors des tests.</p>
+    
+    <p>Le document "doc2_procedure_inspection_verins.txt" recommande d'installer les dispositifs de sécurité sur les gouvernes, soulignant ainsi l'importance de ces dispositifs pour prévenir les mouvements inattendus des surfaces de contrôle pendant les opérations de maintenance.</p>
+
+    <h3>Risques liés à la formation et à la sensibilisation du personnel</h3>
+    <p>La formation inadéquate du personnel constitue un risque transversal affectant tous les aspects de la sécurité. Les documents analysés soulignent l'importance d'une formation appropriée, notamment en ce qui concerne les procédures de sécurité, l'utilisation des équipements de protection, et la manipulation de produits dangereux.</p>
+    
+    <p>Le document "doc10_manuel_tests_non_destructifs.txt" insiste sur la nécessité de suivre une formation spécifique en radioprotection pour le personnel impliqué dans les tests radiographiques. Une formation insuffisante dans ce domaine pourrait exposer le personnel à des risques sanitaires graves et compromettre la qualité des tests effectués.</p>
+
+    <h2>Recommandations pour l'Atténuation des Risques</h2>
+    <p>Sur la base de l'analyse approfondie des risques identifiés, nous proposons les recommandations suivantes pour renforcer la sécurité et la fiabilité des opérations aéronautiques.</p>
+
+    <div class="recommendations">
+        <h3>Recommandations pour les risques techniques</h3>
+        <h4>Amélioration des programmes d'inspection des composants critiques</h4>
+        <p>La défaillance catastrophique de l'aube de turbine haute pression identifiée dans le document "doc3_analyse_defaillance_moteur.pdf" souligne la nécessité de renforcer les programmes d'inspection des composants critiques. Nous recommandons :</p>
+        <ul>
+            <li>L'augmentation de la fréquence des inspections non-destructives des aubes de turbine, particulièrement pour les moteurs ayant accumulé plus de 10 000 cycles.</li>
+            <li>L'adoption systématique de technologies avancées d'inspection, telles que la thermographie infrarouge et les ultrasons multiéléments, pour détecter les fissures par fatigue thermomécanique à un stade précoce.</li>
+            <li>La mise en place d'un système de surveillance continue de l'état des aubes de turbine, utilisant des capteurs embarqués et l'analyse des vibrations en temps réel.</li>
+        </ul>
+
+        <h4>Renforcement de la redondance des systèmes critiques</h4>
+        <p>Pour atténuer les risques liés aux défaillances des systèmes hydrauliques et électroniques, nous recommandons :</p>
+        <ul>
+            <li>La révision des architectures de redondance des systèmes hydrauliques, avec une attention particulière aux servovérins et aux systèmes de secours pour la sortie du train d'atterrissage.</li>
+            <li>L'implémentation de tests de diagnostic avancés pour les systèmes électroniques et de communication, permettant de détecter les dégradations progressives avant qu'elles n'atteignent un niveau critique.</li>
+            <li>La mise à jour des procédures de vérification des systèmes de navigation et d'instrumentation, en intégrant des tests de cohérence croisée entre les différents systèmes redondants.</li>
+        </ul>
+    </div>
+
+    <div class="recommendations">
+        <h3>Recommandations pour les risques opérationnels</h3>
+        <h4>Amélioration des procédures et de la formation des équipages</h4>
+        <p>Pour réduire les risques liés aux procédures de vol et de maintenance, nous recommandons :</p>
+        <ul>
+            <li>La révision et la standardisation des procédures d'urgence, en particulier celles relatives aux défaillances moteur et aux problèmes de pressurisation.</li>
+            <li>Le renforcement de la formation des équipages à la gestion des situations critiques, avec un accent particulier sur la prise de décision en conditions de stress.</li>
+            <li>L'implémentation de briefings systématiques avant les opérations de maintenance complexes, pour s'assurer que tous les intervenants comprennent parfaitement les procédures à suivre et les risques associés.</li>
+        </ul>
+
+        <h4>Optimisation de la gestion des ressources</h4>
+        <p>Pour atténuer les risques liés à la gestion des ressources, nous recommandons :</p>
+        <ul>
+            <li>L'adoption d'une approche basée sur les risques pour l'allocation des ressources de maintenance, en priorisant les composants et systèmes critiques pour la sécurité.</li>
+            <li>La mise en place d'outils de planification avancés, permettant d'optimiser l'utilisation des ressources humaines et matérielles tout en respectant les contraintes de sécurité.</li>
+            <li>L'établissement de mécanismes de retour d'expérience, permettant d'identifier et de corriger rapidement les inefficacités dans la gestion des ressources.</li>
+        </ul>
+    </div>
+
+    <div class="recommendations">
+        <h3>Recommandations pour les risques liés à la maintenance</h3>
+        <h4>Renforcement des procédures d'inspection</h4>
+        <p>Pour améliorer l'efficacité des procédures d'inspection, nous recommandons :</p>
+        <ul>
+            <li>L'adoption d'une approche multicouche pour les inspections, combinant inspection visuelle, tests non-destructifs avancés et analyse des données historiques.</li>
+            <li>La standardisation des procédures d'inspection à travers l'ensemble de la flotte, avec des critères d'acceptation clairement définis et documentés.</li>
+            <li>L'implémentation de systèmes de contrôle qualité pour les inspections, incluant des vérifications indépendantes pour les composants critiques.</li>
+        </ul>
+
+        <h4>Amélioration de la formation et de la qualification du personnel</h4>
+        <p>Pour atténuer les risques liés à la qualification du personnel de maintenance, nous recommandons :</p>
+        <ul>
+            <li>Le renforcement des programmes de formation initiale et continue, avec un accent particulier sur les nouvelles technologies et méthodes d'inspection.</li>
+            <li>La mise en place de processus de certification et de revalidation régulière des compétences du personnel effectuant des tests non-destructifs.</li>
+            <li>Le développement de programmes de mentorat, permettant aux techniciens moins expérimentés de bénéficier de l'expertise des techniciens seniors.</li>
+        </ul>
+    </div>
+
+    <div class="recommendations">
+        <h3>Recommandations pour les risques de sécurité</h3>
+        <h4>Renforcement des mesures de sécurité lors des tests et inspections</h4>
+        <p>Pour améliorer la sécurité lors des opérations de maintenance et d'inspection, nous recommandons :</p>
+        <ul>
+            <li>La mise en place de procédures de sécurité standardisées pour chaque type de test ou d'inspection, avec des listes de vérification détaillées.</li>
+            <li>L'amélioration de la communication entre les équipes au sol et à bord lors des tests, avec des protocoles clairs pour la coordination des activités.</li>
+            <li>L'utilisation systématique d'équipements de protection individuelle adaptés aux risques spécifiques de chaque opération.</li>
+        </ul>
+
+        <h4>Optimisation des systèmes d'alerte et de sécurité</h4>
+        <p>Pour renforcer l'efficacité des systèmes d'alerte, nous recommandons :</p>
+        <ul>
+            <li>La révision régulière de la hiérarchisation des alertes, pour s'assurer que les situations les plus critiques reçoivent l'attention prioritaire de l'équipage.</li>
+            <li>L'implémentation de tests de bout en bout des systèmes d'alerte, simulant des conditions réelles d'exploitation.</li>
+            <li>L'intégration de technologies avancées de diagnostic pour les systèmes d'alerte, permettant de détecter et de corriger les défaillances latentes.</li>
+        </ul>
+    </div>
+
+    <h2>Éléments Visuels</h2>
+
+    <h3>Matrice de Criticité des Risques</h3>
+    <p>La matrice ci-dessous présente une évaluation de la criticité des principaux risques identifiés, en fonction de leur probabilité d'occurrence et de leur impact potentiel. Cette représentation visuelle permet de prioriser les actions d'atténuation.</p>
+    
+    <div class="matrix">
+                   IMPACT
+                Faible  Moyen  Élevé  Critique
+PROBABILITÉ  
+Fréquent        Moyen   Élevé  Critique Critique
+Probable        Faible  Moyen   Élevé   Critique
+Occasionnel     Faible  Moyen   Élevé    Élevé
+Rare            Très    Faible  Moyen    Élevé
+                faible
+    </div>
+
+    <h3>Répartition des Risques par Catégorie</h3>
+    <p>Le graphique suivant illustre la répartition des risques identifiés selon leur catégorie principale. Cette visualisation permet d'identifier les domaines nécessitant une attention particulière.</p>
+    
+    <div class="graph">
+Répartition des Risques Identifiés (%)
+|
+|                    ####
+|                    ####
+|          ####      ####      ####
+|          ####      ####      ####
+|          ####      ####      ####      ####
+|          ####      ####      ####      ####
+|          ####      ####      ####      ####
+|------------------------------------------
+     Techniques  Opérationnels  Maintenance  Sécurité
+        (35%)       (25%)         (20%)       (20%)
+    </div>
+
+    <h3>Tableau de Synthèse des Risques Critiques</h3>
+    <p>Le tableau ci-dessous présente une synthèse des risques les plus critiques identifiés dans l'analyse, avec leur catégorie, leur niveau de criticité et les recommandations principales associées.</p>
+    
+    <div class="table">
++------------------------+---------------+----------+---------------------------+
+| Risque                 | Catégorie     | Criticité| Recommandation principale |
++------------------------+---------------+----------+---------------------------+
+| Défaillance des aubes  | Technique     | Critique | Augmenter la fréquence    |
+| de turbine             |               |          | des inspections NDT       |
++------------------------+---------------+----------+---------------------------+
+| Défaillance des        | Technique     | Élevé    | Réviser l'architecture    |
+| systèmes hydrauliques  |               |          | de redondance             |
++------------------------+---------------+----------+---------------------------+
+| Procédures d'urgence   | Opérationnel  | Élevé    | Standardiser les          |
+| inadéquates            |               |          | procédures et renforcer   |
+|                        |               |          | la formation              |
++------------------------+---------------+----------+---------------------------+
+| Inspection inadéquate  | Maintenance   | Critique | Adopter une approche      |
+| des composants         |               |          | multicouche pour les      |
+| critiques              |               |          | inspections               |
++------------------------+---------------+----------+---------------------------+
+| Défaillance des        | Sécurité      | Élevé    | Implémenter des tests     |
+| systèmes d'alerte      |               |          | de bout en bout           |
++------------------------+---------------+----------+---------------------------+
+    </div>
+
+    <h3>Évolution des Incidents par Type (2020-2025)</h3>
+    <p>Le graphique ci-dessous illustre l'évolution des incidents par type sur la période 2020-2025, permettant d'identifier les tendances et les domaines nécessitant une attention particulière.</p>
+    
+    <div class="graph">
+Nombre d'incidents
+|
+|                                            *
+|                                      *     *
+|                                *     *     *
+|                          *     *     *     *
+|                    *     *     *     *     *
+|              *     *     *     *     *     *
+|        *     *     *     *     *     *     *
+|------------------------------------------
+     2020    2021    2022    2023    2024    2025
+       
+     * Défaillances techniques
+     # Erreurs opérationnelles
+     + Problèmes de maintenance
+     @ Incidents de sécurité
+    </div>
+
+    <h3>Cycle de Vie de la Gestion des Risques</h3>
+    <p>Le diagramme ci-dessous illustre le cycle continu de gestion des risques recommandé pour améliorer la sécurité et la fiabilité des opérations aéronautiques.</p>
+    
+    <div class="diagram">
+                  +----------------+
+                  | Identification |
+                  |   des risques  |
+                  +--------+-------+
+                           |
+                           v
+         +----------------+----------------+
+         |                                 |
++--------v-------+                +--------v-------+
+|   Évaluation   |                |   Traitement   |
+|   des risques  |                |   des risques  |
++--------+-------+                +--------+-------+
+         |                                 |
+         |                                 |
+         v                                 v
++--------+-------+                +--------+-------+
+|  Surveillance  |<---------------+  Communication |
+|   et revue     |                |   et formation |
++----------------+                +----------------+
+    </div>
+
+    <h2 class="conclusion">Conclusion</h2>
+    <p>L'analyse approfondie des 56 documents techniques a permis d'identifier et de classifier un large éventail de risques affectant la sécurité et la fiabilité des opérations aéronautiques. Ces risques, qu'ils soient de nature technique, opérationnelle, liés à la maintenance ou à la sécurité, nécessitent une approche systématique et proactive pour être efficacement atténués.</p>
+    
+    <p>Les risques techniques, notamment ceux liés aux défaillances des composants moteurs, des systèmes hydrauliques, électroniques et de navigation, représentent une part significative des préoccupations identifiées. La défaillance catastrophique d'une aube de turbine haute pression, rapportée dans le document "doc3_analyse_defaillance_moteur.pdf", illustre parfaitement les conséquences potentiellement graves de ces risques techniques.</p>
+    
+    <p>Les risques opérationnels, incluant ceux liés aux procédures de vol et de maintenance, aux opérations au sol, aux défaillances des systèmes de communication et à la gestion des ressources, constituent également un domaine nécessitant une attention particulière. Les incidents rapportés dans les documents analysés soulignent l'importance d'une formation adéquate des équipages et d'une standardisation des procédures.</p>
+    
+    <p>Les risques liés à la maintenance, tels que les procédures d'inspection inadéquates, la formation insuffisante du personnel, la gestion déficiente de la documentation technique et la maintenance préventive insuffisante, représentent un défi majeur pour la sécurité aéronautique. L'importance des tests non-destructifs et d'une approche rigoureuse de la maintenance préventive est soulignée dans plusieurs documents.</p>
+    
+    <p>Enfin, les risques de sécurité, notamment ceux liés aux tests et inspections, aux systèmes d'alerte, à la manipulation de produits dangereux, aux dispositifs mécaniques et à la formation du personnel, complètent ce panorama des défis auxquels l'industrie aéronautique est confrontée.</p>
+    
+    <p>Les recommandations formulées dans ce rapport visent à adresser ces différents risques de manière systématique et intégrée. Elles s'articulent autour de plusieurs axes : l'amélioration des programmes d'inspection des composants critiques, le renforcement de la redondance des systèmes, l'optimisation des procédures et de la formation, la gestion efficace des ressources, et le renforcement des mesures de sécurité.</p>
+    
+    <p>La mise en œuvre de ces recommandations nécessitera un engagement fort de toutes les parties prenantes, ainsi qu'une approche collaborative et transparente. L'industrie aéronautique a toujours placé la sécurité au cœur de ses préoccupations, et c'est en continuant à identifier, analyser et atténuer systématiquement les risques qu'elle pourra maintenir et améliorer son excellent bilan de sécurité.</p>
+    
+    <p>Ce rapport constitue une étape dans ce processus continu d'amélioration. Les risques identifiés et les recommandations formulées doivent être régulièrement réévalués à la lumière des évolutions technologiques, réglementaires et opérationnelles. C'est par cette vigilance constante que l'industrie aéronautique pourra continuer à offrir le mode de transport le plus sûr au monde.</p>
+</body>
+</html>

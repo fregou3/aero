@@ -129,7 +129,9 @@ const MainLayout = () => {
     { text: 'Documents', icon: <DocumentIcon />, path: '/documents' },
     { text: 'Workflow', icon: <AccountTreeIcon />, path: '/workflow' },
     { text: 'Analysis', icon: <DocumentIcon />, path: '/analysis' },
-    { text: 'Intelligence artificielle', icon: <PsychologyIcon />, path: '/ai' }
+    { text: 'AI Doc Reader', icon: <PsychologyIcon />, path: '/ai-consolidation' },
+    { text: 'AI Global Vision', icon: <PsychologyIcon />, path: '/ai-global-vision' },
+    { text: 'AI Chat', icon: <PsychologyIcon />, path: '/ai' }
   ];
 
   return (

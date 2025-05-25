@@ -239,11 +239,11 @@ const AIAssistantPage = () => {
   // Fonction pour trouver les documents pertinents (simulation)
   const findRelevantDocuments = (query) => {
     const allDocs = [
-      { id: 1, title: 'Manuel de maintenance A320', relevance: 0.92 },
-      { id: 2, title: 'Procédure d\'inspection moteur CFM56', relevance: 0.87 },
-      { id: 3, title: 'Certificat de conformité LG-A320-001', relevance: 0.78 },
-      { id: 4, title: 'Rapport d\'analyse structurelle aile A320', relevance: 0.85 },
-      { id: 5, title: 'Guide de dépannage système hydraulique', relevance: 0.79 }
+      { id: 1, title: 'doc1_certificat_conformite_amortisseurs', relevance: 0.92, displayName: 'Certificat de conformité amortisseurs' },
+      { id: 2, title: 'doc2_procedure_inspection_radio', relevance: 0.87, displayName: 'Procédure d\'inspection radio' },
+      { id: 3, title: 'doc3_analyse_defaillance_moteur', relevance: 0.85, displayName: 'Analyse de défaillance moteur' },
+      { id: 4, title: 'doc10_manuel_tests_performance', relevance: 0.78, displayName: 'Manuel de tests de performance' },
+      { id: 5, title: 'doc2_procedure_inspection_chambres', relevance: 0.75, displayName: 'Procédure d\'inspection des chambres' }
     ];
     
     // Filtrer les documents pertinents basés sur des mots-clés (simulation)
@@ -269,25 +269,216 @@ const AIAssistantPage = () => {
   const generateResponseFromDocs = (query, docs) => {
     const queryLower = query.toLowerCase();
     
-    // Réponses prédéfinies basées sur des mots-clés
+    // Réponses détaillées basées sur des mots-clés
     if (queryLower.includes('maintenance') || queryLower.includes('entretien')) {
-      return "D'après les documents techniques, les procédures de maintenance pour les équipements aéronautiques doivent être effectuées selon les intervalles spécifiés par le fabricant. Les inspections régulières sont essentielles pour garantir la sécurité et la conformité aux réglementations. Les documents indiquent que les maintenances de type A doivent être effectuées tous les 400-600 heures de vol, tandis que les maintenances de type C sont programmées tous les 18-24 mois.";
+      if (queryLower.includes('a320')) {
+        return `# Procédures de maintenance pour l'A320
+
+Selon les documents techniques analysés, les procédures de maintenance pour l'Airbus A320 suivent un programme structuré en plusieurs niveaux :
+
+## Maintenance de ligne
+- **Check A** : Inspection visuelle approfondie réalisée tous les 400-600 heures de vol ou 200-300 cycles
+- **Check B** : Vérification des systèmes opérationnels tous les 6-8 mois
+
+## Maintenance lourde
+- **Check C** : Inspection détaillée de la structure et des systèmes tous les 20-24 mois ou 6,000 heures de vol
+  - C1: Vérification des systèmes hydrauliques et électriques
+  - C2: Inspection approfondie du train d'atterrissage
+  - C3: Vérification des commandes de vol et des actionneurs
+  - C4: Inspection détaillée de la structure de l'appareil
+- **Check D** (Grande Visite) : Inspection complète de l'aéronef tous les 6 ans ou 12,000 heures de vol
+
+## Points critiques à surveiller
+- Intégrité structurelle des longerons et des cadres
+- État des joints d'étanchéité des portes et hublots
+- Corrosion des zones humides (toilettes, galleys)
+- Usure des freins et des pneus
+
+Les documents référencés indiquent que toute anomalie détectée doit être corrigée selon les procédures du manuel AMM (Aircraft Maintenance Manual) section 05-10-00 avant la remise en service de l'appareil.`;
+      } else {
+        return `# Procédures de maintenance aéronautique
+
+D'après l'analyse des documents techniques, les procédures de maintenance pour les équipements aéronautiques doivent suivre un processus rigoureux :
+
+## Cadre réglementaire
+- Conformité aux règlements EASA Part-145 pour les organismes de maintenance
+- Respect des directives de navigabilité (AD) et bulletins de service (SB)
+- Application des procédures du manuel de maintenance approuvé par le constructeur
+
+## Types de maintenance
+- **Maintenance programmée** : Inspections périodiques selon les intervalles définis
+  - Maintenance de ligne : Vérifications quotidiennes et hebdomadaires
+  - Maintenance légère : Inspections intermédiaires (400-600 heures)
+  - Maintenance lourde : Inspections approfondies (18-24 mois)
+- **Maintenance non programmée** : Interventions suite à des anomalies détectées
+
+## Documentation obligatoire
+- Ordres de travail détaillés pour chaque tâche
+- Fiches de contrôle et de conformité
+- Traçabilité des pièces remplacées
+- Certificats de remise en service (CRS)
+
+Les documents techniques soulignent l'importance d'une documentation exhaustive et de la qualification du personnel de maintenance conformément aux standards de l'industrie.`;
+      }
     }
     
     if (queryLower.includes('moteur') || queryLower.includes('cfm56')) {
-      return "Le moteur CFM56 est un turboréacteur à double flux largement utilisé sur les avions commerciaux comme l'A320. Selon les documents techniques, sa durée de vie moyenne est de 30 000 cycles avant révision majeure. Les inspections boroscopiques doivent être effectuées tous les 1 000 cycles pour détecter d'éventuelles fissures ou détériorations des aubes de turbine. La procédure d'inspection complète est détaillée dans le manuel de maintenance section 71-00-00.";
+      if (queryLower.includes('défaillance') || queryLower.includes('panne')) {
+        return `# Analyse de défaillance des moteurs CFM56
+
+Selon le document "doc3_analyse_defaillance_moteur.pdf", les défaillances du CFM56 peuvent être classées comme suit :
+
+## Types de défaillances fréquentes
+- **Fissuration des aubes de turbine haute pression (HPT)** : 32% des cas
+  - Causes principales : fatigue thermomécanique, cycles thermiques répétés
+  - Signes précurseurs : augmentation des vibrations, baisse de performance
+- **Détérioration des chambres de combustion** : 18% des cas
+  - Causes principales : surchauffe locale, mauvaise atomisation du carburant
+  - Conséquences : points chauds, déformation des injecteurs
+- **Défaillance des roulements** : 15% des cas
+  - Causes principales : lubrification insuffisante, contamination de l'huile
+  - Signes détectables : augmentation de la température d'huile, présence de particules métalliques
+
+## Procédures d'investigation
+1. Analyse des données de vol (EGT, N1, N2, débit carburant)
+2. Inspection boroscopique des zones critiques
+3. Analyse spectrométrique de l'huile
+4. Examen métallurgique des pièces défaillantes
+
+Le rapport souligne que 78% des défaillances peuvent être anticipées par une surveillance préventive adéquate et des inspections régulières.`;
+      } else if (queryLower.includes('fiabilité') || queryLower.includes('performance')) {
+        return `# Fiabilité et performance de la flotte CFM56-7B
+
+D'après l'analyse des documents techniques, notamment "doc10_manuel_tests_performance.pdf", la fiabilité du CFM56-7B se caractérise par :
+
+## Indicateurs de fiabilité
+- **MTBF (Mean Time Between Failures)** : 20,000+ heures de fonctionnement
+- **Taux de dépose prématurée** : 0.02 par 1,000 heures de vol
+- **Fiabilité au décollage** : 99.98% (interruptions de décollage liées au moteur)
+
+## Performance opérationnelle
+- Consommation spécifique : 0.36-0.38 lb/lbf/h en croisière
+- Poussée au décollage : 24,000 à 27,300 livres selon la variante
+- Ratio de dilution : 5.1:1
+- Température EGT maximale : 950°C
+
+## Facteurs influant sur la fiabilité
+- **Environnement opérationnel** : Les opérations dans des environnements avec forte présence de sable/poussière réduisent la durée de vie de 15-20%
+- **Pratiques de maintenance** : Les compagnies suivant le programme de maintenance optimisé (OMP) constatent une amélioration de la fiabilité de 12%
+- **Âge de la flotte** : Dégradation naturelle de 1% des performances tous les 3,000 cycles
+
+Les statistiques montrent que la flotte CFM56-7B maintient un excellent niveau de fiabilité avec plus de 190 millions d'heures de vol cumulées et un taux d'incidents critiques parmi les plus bas de l'industrie.`;
+      } else {
+        return `# Moteur CFM56 - Caractéristiques et maintenance
+
+Le CFM56 est un turboréacteur à double flux développé par CFM International (coentreprise entre GE Aviation et Safran Aircraft Engines). D'après les documents techniques analysés :
+
+## Caractéristiques techniques
+- **Architecture** : Turboréacteur à double corps et double flux
+- **Taux de compression** : 27:1 à 32:1 selon les variantes
+- **Température d'entrée turbine** : 1,400°C - 1,580°C
+- **Modules principaux** : Fan, compresseur BP, compresseur HP, chambre de combustion, turbine HP, turbine BP
+
+## Programme de maintenance
+- **Inspections boroscopiques** : Tous les 1,000 cycles pour les aubes de turbine HP
+- **Inspection des chambres de combustion** : Tous les 2,500 cycles
+- **Surveillance en continu** : Paramètres EGT, N1, N2, débit carburant, pression d'huile
+- **Overhaul complet** : Entre 25,000 et 30,000 cycles selon l'utilisation
+
+## Points d'attention particuliers
+- Vérification régulière de l'état des aubes de soufflante (FOD)
+- Surveillance de l'usure des segments de frottement
+- Contrôle de l'étanchéité des joints d'air
+- Analyse spectrométrique de l'huile tous les 1,000 heures
+
+Les documents indiquent que la durée de vie moyenne des pièces critiques comme les disques de turbine HP est de 15,000 à 20,000 cycles, nécessitant un suivi rigoureux de leur état.`;
+      }
     }
     
     if (queryLower.includes('hydraulique') || queryLower.includes('système')) {
-      return "Le système hydraulique des aéronefs modernes comprend généralement trois circuits indépendants pour assurer la redondance. D'après le guide de dépannage, les problèmes les plus courants sont liés aux fuites au niveau des raccords et à la contamination du fluide. La pression normale de fonctionnement est de 3000 PSI, et toute chute de pression en dessous de 2700 PSI doit être investiguée immédiatement. Les procédures de test sont détaillées dans la section 29-10-00 du manuel de maintenance.";
+      return `# Systèmes hydrauliques des avions modernes
+
+D'après l'analyse des documents techniques, notamment "doc2_procedure_verification_hydraulique.pdf", les systèmes hydrauliques des aéronefs modernes présentent les caractéristiques suivantes :
+
+## Architecture des systèmes hydrauliques
+- **Configuration standard** : 3 circuits indépendants (vert, jaune, bleu) pour assurer la redondance
+  - Système vert : Alimenté par les moteurs (pompes entraînées mécaniquement)
+  - Système jaune : Alimenté par les moteurs et pompes électriques
+  - Système bleu : Alimenté par des pompes électriques (secours)
+
+## Paramètres opérationnels
+- **Pression de fonctionnement** : 3,000 PSI (207 bar) ± 200 PSI
+- **Fluide hydraulique** : Skydrol LD-4 ou 5 (base ester phosphate)
+- **Température normale** : -40°C à +120°C
+- **Débit maximal** : 60-80 gallons/minute selon le circuit
+
+## Composants principaux
+- Réservoirs avec accumulateurs à air/azote
+- Pompes principales et de secours
+- Filtres (finesse 3-5 microns)
+- Échangeurs thermiques
+- Accumulateurs de pression
+- Servovalves et actionneurs
+
+## Procédures de maintenance
+1. Vérification quotidienne des niveaux de fluide
+2. Contrôle de pression tous les 400-600 heures
+3. Analyse du fluide tous les 1,000 heures (contamination, acidité)
+4. Test d'étanchéité des circuits tous les 6 mois
+5. Remplacement des filtres selon indicateurs de colmatage
+
+Les documents soulignent que toute chute de pression en dessous de 2,700 PSI nécessite une investigation immédiate, car elle peut indiquer une fuite interne ou externe du circuit.`;
     }
     
     if (queryLower.includes('certification') || queryLower.includes('conformité')) {
-      return "La certification de conformité est un document essentiel qui atteste que les pièces ou équipements répondent aux spécifications du fabricant et aux exigences réglementaires. Selon les documents, chaque pièce doit être accompagnée d'un certificat EASA Form 1 ou FAA 8130-3. La traçabilité complète depuis la fabrication jusqu'à l'installation est obligatoire, et tous les documents doivent être conservés pendant au moins 3 ans après la mise hors service de la pièce.";
+      return `# Documents nécessaires pour la certification
+
+Selon l'analyse des documents techniques, notamment "doc1_certificat_conformite_amortisseurs.pdf", les exigences documentaires pour la certification aéronautique sont les suivantes :
+
+## Documents de base requis
+- **Certificat de type (TC)** : Document fondamental attestant la conformité d'un aéronef aux exigences de navigabilité
+- **Certificat de navigabilité individuel (CofA)** : Document spécifique à chaque appareil
+- **Certificat acoustique** : Attestation de conformité aux normes de bruit
+
+## Documentation des équipements et pièces
+- **EASA Form 1 / FAA 8130-3** : Certificat de conformité et de mise en service
+- **Certificats d'origine des pièces** : Traçabilité depuis le fabricant
+- **Rapports d'essais** : Résultats des tests de qualification
+- **Dossiers de modifications** : Historique des changements approuvés
+
+## Documentation de maintenance
+- **Programme de maintenance approuvé** : Calendrier des inspections et travaux
+- **Livrets d'aéronef, moteur et hélice** : Historique complet
+- **Fiches de pesage et centrage** : Données de masse et équilibrage
+- **Liste des réparations structurales** : Détails des réparations effectuées
+- **État des consignes de navigabilité (AD)** : Suivi des directives obligatoires
+
+## Conservation des documents
+- Documents de certification de base : Durant toute la vie de l'aéronef
+- Documents de maintenance : Minimum 3 ans après la mise hors service
+- Enregistrements des travaux : Minimum 2 ans après signature
+
+Les documents analysés soulignent l'importance d'un système de gestion documentaire robuste, car toute lacune peut entraîner la suspension de la navigabilité de l'appareil.`;
     }
     
-    // Réponse par défaut
-    return `Basé sur l'analyse de ${docs.length} documents techniques pertinents, je peux vous informer que les procédures aéronautiques standard exigent une documentation rigoureuse et des inspections régulières. Les documents indiquent que toute intervention doit être consignée dans le carnet de maintenance de l'aéronef, avec référence aux manuels techniques appropriés. Pour plus de détails spécifiques à votre question, je vous recommande de consulter les sections correspondantes des manuels de maintenance.`;
+    // Réponse par défaut améliorée et plus détaillée
+    return `# Analyse technique basée sur ${docs.length} documents pertinents
+
+Après examen approfondi des documents techniques disponibles, notamment ${docs.map(d => d.displayName || d.title).join(', ')}, je peux vous fournir les informations suivantes :
+
+## Points clés identifiés
+- Les procédures aéronautiques standard exigent une documentation rigoureuse pour toute intervention
+- La traçabilité complète des opérations de maintenance est obligatoire selon les réglementations EASA/FAA
+- Les intervalles d'inspection doivent strictement respecter les recommandations du constructeur
+- Toute déviation par rapport aux procédures standard nécessite une approbation spécifique
+
+## Recommandations techniques
+- Consulter la section ${Math.floor(Math.random() * 80)}-${Math.floor(Math.random() * 20)}-00 du manuel de maintenance pour les détails spécifiques
+- Vérifier les bulletins de service récents pouvant affecter les procédures standard
+- S'assurer que le personnel exécutant les tâches possède les qualifications appropriées
+- Documenter exhaustivement toutes les interventions dans le système de gestion de maintenance
+
+Pour obtenir des informations plus précises sur votre demande spécifique, n'hésitez pas à reformuler votre question en incluant des détails sur le type d'aéronef, le système ou le composant concerné.`;
   };
 
   // Fonction pour initialiser la base vectorielle
@@ -450,14 +641,31 @@ const AIAssistantPage = () => {
                             </Typography>
                             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 0.5 }}>
                               {message.relevantDocs.map((doc, index) => (
-                                <Chip
-                                  key={index}
-                                  icon={<DocIcon fontSize="small" />}
-                                  label={doc.title}
-                                  size="small"
-                                  variant="outlined"
-                                  sx={{ fontSize: '0.7rem' }}
-                                />
+                                <Tooltip title="Cliquer pour ouvrir le PDF" arrow key={index}>
+                                  <Chip
+                                    key={index}
+                                    icon={<DocIcon fontSize="small" />}
+                                    label={doc.displayName || doc.title}
+                                    size="small"
+                                    variant="outlined"
+                                    sx={{ 
+                                      fontSize: '0.7rem',
+                                      cursor: 'pointer',
+                                      '&:hover': {
+                                        backgroundColor: '#e3f2fd',
+                                        borderColor: '#2196f3'
+                                      }
+                                    }}
+                                    onClick={() => {
+                                      // Accéder directement aux documents via le serveur frontend
+                                      // Vérifier si le nom du fichier contient déjà l'extension .pdf
+                                      const pdfPath = `/docs/${doc.title}${doc.title.endsWith('.pdf') ? '' : '.pdf'}`;
+                                      console.log(`Ouverture du document: ${pdfPath}`);
+                                      window.open(pdfPath, '_blank');
+                                    }}
+                                    component="a"
+                                  />
+                                </Tooltip>
                               ))}
                             </Box>
                           </Box>
@@ -601,14 +809,14 @@ const AIAssistantPage = () => {
                   <ListItemText primary="Quelles sont les procédures de maintenance pour l'A320?" />
                 </ListItem>
                 <ListItem button onClick={() => {
+                  setInputMessage("fiabilité de la flotte CFM56-7B");
+                }}>
+                  <ListItemText primary="fiabilité de la flotte CFM56-7B" />
+                </ListItem>
+                <ListItem button onClick={() => {
                   setInputMessage("Comment inspecter un moteur CFM56?");
                 }}>
                   <ListItemText primary="Comment inspecter un moteur CFM56?" />
-                </ListItem>
-                <ListItem button onClick={() => {
-                  setInputMessage("Expliquez le système hydraulique des avions modernes");
-                }}>
-                  <ListItemText primary="Expliquez le système hydraulique des avions modernes" />
                 </ListItem>
                 <ListItem button onClick={() => {
                   setInputMessage("Quels documents sont nécessaires pour la certification?");

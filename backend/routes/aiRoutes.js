@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const aiController = require('../controllers/aiController');
+const aiAnalysisController = require('../controllers/aiAnalysisController');
 
 /**
  * @swagger
@@ -61,6 +62,73 @@ router.get('/vector-db-status', aiController.getVectorDbStatus);
  *         description: Erreur serveur
  */
 router.post('/clear-vector-db', aiController.clearVectorDb);
+
+/**
+ * @swagger
+ * /api/ai/analyze-with-ai:
+ *   post:
+ *     summary: Analyse tous les documents PDF du répertoire docs avec OpenAI
+ *     tags: [AI]
+ *     responses:
+ *       200:
+ *         description: Documents analysés avec succès
+ *       400:
+ *         description: Erreur de requête
+ *       500:
+ *         description: Erreur serveur
+ */
+router.post('/analyze-with-ai', aiAnalysisController.analyzeDocumentsWithAI);
+
+/**
+ * @swagger
+ * /api/ai/ai-analyses:
+ *   get:
+ *     summary: Récupère toutes les analyses AI
+ *     tags: [AI]
+ *     responses:
+ *       200:
+ *         description: Analyses récupérées avec succès
+ *       500:
+ *         description: Erreur serveur
+ */
+router.get('/ai-analyses', aiAnalysisController.getAllAIAnalyses);
+
+/**
+ * @swagger
+ * /api/ai/ai-analyses/{id}:
+ *   get:
+ *     summary: Récupère une analyse AI par son ID
+ *     tags: [AI]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID de l'analyse
+ *     responses:
+ *       200:
+ *         description: Analyse récupérée avec succès
+ *       400:
+ *         description: ID manquant
+ *       500:
+ *         description: Erreur serveur
+ */
+router.get('/ai-analyses/:id', aiAnalysisController.getAIAnalysisById);
+
+/**
+ * @swagger
+ * /api/ai/clear-ai-analyses:
+ *   post:
+ *     summary: Vide la table des analyses AI
+ *     tags: [AI]
+ *     responses:
+ *       200:
+ *         description: Table vidée avec succès
+ *       500:
+ *         description: Erreur serveur
+ */
+router.post('/clear-ai-analyses', aiAnalysisController.clearAIAnalyses);
 
 /**
  * @swagger
