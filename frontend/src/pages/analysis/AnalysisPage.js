@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Box,
   Typography,
@@ -37,6 +37,219 @@ import {
 } from '@mui/icons-material';
 
 // Le tableau de documents sera rempli uniquement après l'analyse des PDF
+
+// Composant pour le graphique en camembert des statistiques de documents
+const PieChart = ({ data }) => {
+  const total = data.reduce((sum, item) => sum + item.value, 0);
+  let startAngle = 0;
+
+  return (
+    <svg width="400" height="300" viewBox="0 0 140 100">
+      {/* Titre de la légende */}
+      <text x="110" y="15" fontSize="5" fontWeight="bold" textAnchor="middle">
+        Légende
+      </text>
+      <line x1="95" y1="18" x2="125" y2="18" stroke="#ccc" strokeWidth="0.5" />
+      
+      {/* Graphique en camembert */}
+      <g transform="translate(45, 50)">
+        {data.map((item, index) => {
+          const percentage = (item.value / total) * 100;
+          const angle = (percentage / 100) * 360;
+          const endAngle = startAngle + angle;
+          
+          // Calcul des coordonnées pour le chemin d'arc
+          const x1 = Math.cos((startAngle * Math.PI) / 180) * 40;
+          const y1 = Math.sin((startAngle * Math.PI) / 180) * 40;
+          const x2 = Math.cos((endAngle * Math.PI) / 180) * 40;
+          const y2 = Math.sin((endAngle * Math.PI) / 180) * 40;
+          
+          // Déterminer si l'arc est grand (plus de 180 degrés)
+          const largeArcFlag = angle > 180 ? 1 : 0;
+          
+          // Créer le chemin d'arc
+          const path = [
+            `M ${x1} ${y1}`, // Déplacer au point de départ
+            `A 40 40 0 ${largeArcFlag} 1 ${x2} ${y2}`, // Arc
+            'L 0 0', // Ligne vers le centre
+            'Z' // Fermer le chemin
+          ].join(' ');
+          
+          // Calculer la position du texte de légende
+          const labelAngle = startAngle + angle / 2;
+          const labelX = Math.cos((labelAngle * Math.PI) / 180) * 20;
+          const labelY = Math.sin((labelAngle * Math.PI) / 180) * 20;
+          
+          // Mettre à jour l'angle de départ pour le prochain segment
+          const currentStartAngle = startAngle;
+          startAngle = endAngle;
+          
+          return (
+            <g key={index}>
+              <path d={path} fill={item.color} stroke="#fff" strokeWidth="0.5" />
+              {percentage > 5 && (
+                <text
+                  x={labelX}
+                  y={labelY}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill="#fff"
+                  fontSize="4"
+                  fontWeight="bold"
+                >
+                  {Math.round(percentage)}%
+                </text>
+              )}
+            </g>
+          );
+        })}
+      </g>
+      
+      {/* Légende à droite */}
+      <g transform="translate(95, 25)">
+        {data.map((item, index) => (
+          <g key={index} transform={`translate(0, ${index * 12})`}>
+            <rect x="0" y="-4" width="8" height="8" fill={item.color} stroke="#ccc" strokeWidth="0.2" />
+            <text x="12" y="0" fontSize="5" dominantBaseline="middle">
+              {item.name} ({item.value})
+            </text>
+          </g>
+        ))}
+      </g>
+      
+      {/* Cadre autour de la légende */}
+      <rect x="90" y="10" width="45" height={10 + data.length * 12} fill="none" stroke="#eee" strokeWidth="0.5" rx="2" />
+    </svg>
+  );
+};
+
+// Composant pour le graphique à barres des tendances
+const BarChart = ({ data }) => {
+  const maxValue = Math.max(...data.map(item => item.value));
+  const barWidth = 80 / data.length;
+  
+  return (
+    <svg width="300" height="300" viewBox="0 0 100 100">
+      {/* Axe Y */}
+      <line x1="10" y1="10" x2="10" y2="80" stroke="#333" strokeWidth="0.5" />
+      {/* Axe X */}
+      <line x1="10" y1="80" x2="90" y2="80" stroke="#333" strokeWidth="0.5" />
+      
+      {/* Graduations axe Y */}
+      {[0, 25, 50, 75, 100].map((tick, index) => (
+        <g key={index}>
+          <line 
+            x1="8" 
+            y1={80 - (tick / 100) * 70} 
+            x2="10" 
+            y2={80 - (tick / 100) * 70} 
+            stroke="#333" 
+            strokeWidth="0.5" 
+          />
+          <text 
+            x="6" 
+            y={80 - (tick / 100) * 70} 
+            fontSize="3" 
+            textAnchor="end" 
+            dominantBaseline="middle"
+          >
+            {tick}%
+          </text>
+        </g>
+      ))}
+      
+      {/* Barres */}
+      {data.map((item, index) => {
+        const barHeight = (item.value / maxValue) * 70;
+        const x = 15 + index * barWidth;
+        
+        return (
+          <g key={index}>
+            <rect 
+              x={x} 
+              y={80 - barHeight} 
+              width={barWidth - 5} 
+              height={barHeight} 
+              fill={item.color} 
+            />
+            <text 
+              x={x + (barWidth - 5) / 2} 
+              y={85} 
+              fontSize="3" 
+              textAnchor="middle"
+              transform={`rotate(45, ${x + (barWidth - 5) / 2}, 85)`}
+            >
+              {item.name}
+            </text>
+            <text 
+              x={x + (barWidth - 5) / 2} 
+              y={80 - barHeight - 2} 
+              fontSize="3" 
+              textAnchor="middle"
+            >
+              {item.value}%
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+};
+
+// Définition des mots-clés importants par catégorie de document
+const keywordsByCategory = {
+  'Technical': [
+    'maintenance', 'inspection', 'réparation', 'structure', 'fuselage', 'aile', 'composant',
+    'système', 'électrique', 'hydraulique', 'avionique', 'certification', 'conformité', 'test'
+  ],
+  'Procedure': [
+    'procédure', 'étape', 'instruction', 'méthode', 'processus', 'protocole', 'vérification',
+    'validation', 'inspection', 'maintenance', 'réparation', 'démontage', 'montage', 'test'
+  ],
+  'Report': [
+    'rapport', 'analyse', 'résultat', 'conclusion', 'recommandation', 'observation', 'incident',
+    'défaillance', 'usure', 'performance', 'évaluation', 'mesure', 'test', 'données'
+  ],
+  'Guide': [
+    'guide', 'manuel', 'instruction', 'référence', 'utilisation', 'opération', 'formation',
+    'apprentissage', 'tutoriel', 'conseil', 'recommandation', 'méthode', 'pratique'
+  ],
+  'Certification': [
+    'certification', 'norme', 'standard', 'règlement', 'conformité', 'autorisation', 'validation',
+    'approbation', 'qualité', 'sécurité', 'navigabilité', 'airworthiness', 'EASA', 'FAA'
+  ]
+};
+
+// Fonction pour calculer la pertinence d'un document en fonction de ses mots-clés
+const calculateKeywordRelevance = (doc) => {
+  if (!doc.keywords || !doc.type || !keywordsByCategory[doc.type]) {
+    return 0;
+  }
+  
+  const categoryKeywords = keywordsByCategory[doc.type];
+  let matchCount = 0;
+  let totalWeight = 0;
+  
+  // Parcourir les mots-clés du document
+  doc.keywords.forEach(keyword => {
+    // Vérifier si le mot-clé est important pour cette catégorie
+    if (categoryKeywords.includes(keyword.toLowerCase())) {
+      matchCount++;
+      totalWeight += 2; // Les mots-clés importants ont un poids plus élevé
+    } else {
+      totalWeight += 1; // Les autres mots-clés ont un poids standard
+    }
+  });
+  
+  // Calculer la pertinence en fonction du nombre de correspondances et du poids total
+  if (totalWeight === 0) return 0;
+  
+  // Formule de pertinence: (matchCount * 2 + (doc.keywords.length - matchCount)) / (categoryKeywords.length * 2) * 100
+  // Cette formule donne plus d'importance aux mots-clés importants pour la catégorie
+  const relevance = Math.min(100, Math.round((matchCount * 2 + (doc.keywords.length - matchCount)) / (categoryKeywords.length) * 100));
+  
+  return relevance;
+};
 
 const AnalysisPage = () => {
   const [loading, setLoading] = useState(false);
@@ -439,12 +652,12 @@ const AnalysisPage = () => {
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
                 <Chip 
                   icon={<WarningIcon />}
-                  label={`Urgent: ${documentData.filter(doc => doc.riskLevel === 'élevée').length}`} 
+                  label={`Urgent: ${documentData.filter(doc => doc.riskLevel === 'élevée' || doc.riskLevel === 'Urgent' || doc.riskLevel === 'urgent' || doc.riskLevel === 'URGENT').length}`} 
                   color="error"
                   variant="outlined"
                 />
                 <Chip 
-                  label={`Normal: ${documentData.filter(doc => doc.riskLevel === 'normale').length}`} 
+                  label={`Normal: ${documentData.filter(doc => doc.riskLevel === 'normale' || doc.riskLevel === 'Normal' || doc.riskLevel === 'normal' || doc.riskLevel === 'NORMAL').length}`} 
                   color="warning"
                   variant="outlined"
                 />
@@ -458,6 +671,8 @@ const AnalysisPage = () => {
                   color="default"
                   variant="outlined"
                 />
+
+
                 <Chip 
                   label={`Total: ${documentData.length}`} 
                   color="primary"
@@ -508,13 +723,14 @@ const AnalysisPage = () => {
                         </TableCell>
                         <TableCell>{doc.type}</TableCell>
                         <TableCell>
-                          {doc.riskLevel === 'élevée' ? (
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                              <WarningIcon color="error" sx={{ mr: 1 }} />
+                          {doc.riskLevel === 'élevée' || doc.riskLevel === 'Urgent' || doc.riskLevel === 'urgent' || doc.riskLevel === 'URGENT' ? (
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                              <WarningIcon color="error" />
                               <Chip 
                                 label="URGENT" 
                                 color="error"
-                                size="small" 
+                                size="small"
+                                sx={{ borderRadius: '16px' }}
                               />
                             </Box>
                           ) : (
@@ -522,7 +738,7 @@ const AnalysisPage = () => {
                               label={doc.riskLevel || 'inconnue'} 
                               color={
                                 doc.riskLevel === 'faible' ? 'success' : 
-                                doc.riskLevel === 'normale' ? 'warning' :
+                                doc.riskLevel === 'normale' || doc.riskLevel === 'Normal' || doc.riskLevel === 'normal' || doc.riskLevel === 'NORMAL' ? 'warning' :
                                 'default'  // pour 'inconnue'
                               } 
                               size="small" 
@@ -543,14 +759,14 @@ const AnalysisPage = () => {
                             >
                               <Box
                                 sx={{
-                                  width: `${doc.relevance}%`,
-                                  bgcolor: doc.relevance > 80 ? 'success.main' : doc.relevance > 60 ? 'warning.main' : 'error.main',
+                                  width: `${calculateKeywordRelevance(doc)}%`,
+                                  bgcolor: calculateKeywordRelevance(doc) > 80 ? 'success.main' : calculateKeywordRelevance(doc) > 60 ? 'warning.main' : 'error.main',
                                   height: 8,
                                   borderRadius: 1
                                 }}
                               />
                             </Box>
-                            {doc.relevance}%
+                            {calculateKeywordRelevance(doc)}%
                           </Box>
                         </TableCell>
                         <TableCell>
@@ -580,9 +796,35 @@ const AnalysisPage = () => {
               </Typography>
               <Divider sx={{ mb: 2 }} />
               <Box sx={{ height: 300, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Typography variant="body1" color="text.secondary">
-                  Graphique de statistiques des documents (à implémenter)
-                </Typography>
+                <Typography variant="subtitle1" sx={{ mb: 2 }}>
+                Répartition des documents par niveau de risque
+              </Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 300 }}>
+                <PieChart 
+                  data={[
+                    { 
+                      name: 'Urgent', 
+                      value: documentData.filter(doc => doc.riskLevel === 'élevée' || doc.riskLevel === 'Urgent' || doc.riskLevel === 'urgent' || doc.riskLevel === 'URGENT').length, 
+                      color: '#f44336' 
+                    },
+                    { 
+                      name: 'Normal', 
+                      value: documentData.filter(doc => doc.riskLevel === 'normale' || doc.riskLevel === 'Normal' || doc.riskLevel === 'normal' || doc.riskLevel === 'NORMAL').length, 
+                      color: '#ff9800' 
+                    },
+                    { 
+                      name: 'Faible', 
+                      value: documentData.filter(doc => doc.riskLevel === 'faible').length, 
+                      color: '#4caf50' 
+                    },
+                    { 
+                      name: 'Inconnu', 
+                      value: documentData.filter(doc => doc.riskLevel === 'inconnue').length, 
+                      color: '#9e9e9e' 
+                    }
+                  ]}
+                />
+              </Box>
               </Box>
             </CardContent>
           </Card>
@@ -596,9 +838,49 @@ const AnalysisPage = () => {
               </Typography>
               <Divider sx={{ mb: 2 }} />
               <Box sx={{ height: 300, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Typography variant="body1" color="text.secondary">
-                  Graphique d'analyse des tendances (à implémenter)
-                </Typography>
+                <Typography variant="subtitle1" sx={{ mb: 2 }}>
+                Pertinence des documents par type (basée sur les mots-clés)
+              </Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 300 }}>
+                <BarChart 
+                  data={[
+                    { 
+                      name: 'Technical', 
+                      value: Math.round(documentData.filter(doc => doc.type === 'Technical').reduce((sum, doc) => {
+                        // Calculer la pertinence basée sur les mots-clés pour chaque document
+                        const keywordRelevance = calculateKeywordRelevance(doc);
+                        return sum + keywordRelevance;
+                      }, 0) / (documentData.filter(doc => doc.type === 'Technical').length || 1)), 
+                      color: '#2196f3' 
+                    },
+                    { 
+                      name: 'Procedure', 
+                      value: Math.round(documentData.filter(doc => doc.type === 'Procedure').reduce((sum, doc) => {
+                        const keywordRelevance = calculateKeywordRelevance(doc);
+                        return sum + keywordRelevance;
+                      }, 0) / (documentData.filter(doc => doc.type === 'Procedure').length || 1)), 
+                      color: '#9c27b0' 
+                    },
+
+                    { 
+                      name: 'Guide', 
+                      value: Math.round(documentData.filter(doc => doc.type === 'Guide').reduce((sum, doc) => {
+                        const keywordRelevance = calculateKeywordRelevance(doc);
+                        return sum + keywordRelevance;
+                      }, 0) / (documentData.filter(doc => doc.type === 'Guide').length || 1)), 
+                      color: '#009688' 
+                    },
+                    { 
+                      name: 'Certification', 
+                      value: Math.round(documentData.filter(doc => doc.type === 'Certification').reduce((sum, doc) => {
+                        const keywordRelevance = calculateKeywordRelevance(doc);
+                        return sum + keywordRelevance;
+                      }, 0) / (documentData.filter(doc => doc.type === 'Certification').length || 1)), 
+                      color: '#673ab7' 
+                    }
+                  ]}
+                />
+              </Box>
               </Box>
             </CardContent>
           </Card>
